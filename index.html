@@ -29,10 +29,12 @@
             instagram: "https://www.instagram.com/ordinum.br/",
             linkedin: "https://www.linkedin.com/company/ordinum"
         },
-        mapEmbedSrc: "https://www.google.com/maps?q=Uberlândia+MG&output=embed",
+        // FIX: map center (Coordenadas Uberlândia com Zoom 16)
+        mapEmbedSrc: "https://www.google.com/maps?q=-18.916113414750352,-48.274286918089764&z=16&output=embed",
         mapFallback: {
             message: "Visualize nossa localização no Google Maps",
-            link: "https://www.google.com/maps?q=Uberlândia+MG"
+            // FIX: map center fallback link
+            link: "https://www.google.com/maps?q=-18.916113414750352,-48.274286918089764&z=16"
         },
         theme: {
             colors: {
@@ -194,10 +196,12 @@
     }
     .btn-text:hover { border-color: var(--color-navy); }
 
+    /* FIX: skip-link (Hidden completely with transform, shows only on focus) */
     .skip-link {
-        position: absolute; top: -40px; left: 0; background: var(--color-navy); color: white; padding: 8px; z-index: 2000;
+        position: absolute; top: 0; left: 0; background: var(--color-navy); color: white; padding: 8px; z-index: 2000;
+        transform: translateY(-200%);
     }
-    .skip-link:focus { top: 0; }
+    .skip-link:focus { transform: translateY(0); }
 
     /* HEADER */
     .header {
@@ -805,7 +809,8 @@
                         </div>
                         <div class="form-group">
                             <label class="form-label">Celular</label>
-                            <input type="tel" id="contact-phone" class="form-input" placeholder="(00) 00000-0000" required>
+                            <!-- FIX: phone mask inputs (added numeric mode, autocomplete, maxlength) -->
+                            <input type="tel" id="contact-phone" class="form-input" placeholder="(00) 00000-0000" inputmode="numeric" autocomplete="tel" maxlength="15" required>
                         </div>
                         <div class="form-group">
                             <label class="form-label">Email Corporativo</label>
@@ -862,6 +867,27 @@
 
 <!-- LOGIC -->
 <script defer>
+    // FIX: phone mask helper function
+    const formatBRPhone = (value) => {
+        // Remove non-digits
+        value = value.replace(/\D/g, '');
+        // Limit to 11 digits
+        value = value.substring(0, 11);
+        
+        // Apply mask progressively
+        if (value.length > 7) {
+            // (DD) XXXXX-XXXX
+            value = value.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, '($1) $2-$3');
+        } else if (value.length > 2) {
+            // (DD) XXXXX...
+            value = value.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
+        } else if (value.length > 0) {
+            // (DD...
+            value = value.replace(/^(\d*)/, '($1');
+        }
+        return value;
+    };
+
     document.addEventListener('DOMContentLoaded', () => {
         
         // 1. POPULATE CONTENT FROM CONFIG
@@ -924,6 +950,20 @@
         };
 
         // 3. UI INTERACTIONS
+
+        // FIX: phone mask listener
+        const phoneInput = el('contact-phone');
+        if (phoneInput) {
+            phoneInput.addEventListener('input', (e) => {
+                e.target.value = formatBRPhone(e.target.value);
+            });
+            phoneInput.addEventListener('paste', (e) => {
+                const pasted = (e.clipboardData || window.clipboardData).getData('text');
+                e.preventDefault(); // Prevent default paste to handle manually
+                const currentVal = formatBRPhone(pasted);
+                e.target.value = currentVal;
+            });
+        }
         
         // Header Scroll Effect
         const header = el('header');
@@ -1019,19 +1059,20 @@
             feedback.style.color = "red";
             return;
         }
-        if (!phone) {
-            feedback.textContent = "O celular é obrigatório.";
+        
+        // FIX: phone validation (must be 11 digits)
+        const normalizedPhone = normalizePhone(phone);
+        if (!normalizedPhone || normalizedPhone.length !== 11) {
+            feedback.textContent = "O celular deve ter 11 dígitos (DDD + 9 números).";
             feedback.style.color = "red";
             return;
         }
+
         if (!message) {
             feedback.textContent = "A descrição é obrigatória.";
             feedback.style.color = "red";
             return;
         }
-
-        // Normalization
-        const normalizedPhone = normalizePhone(phone);
         
         // Prepare Payload
         const payload = {
