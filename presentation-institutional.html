@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ordinum | Seu futuro, em ordem</title>
+    <link rel="icon" href="https://ordinum-default-bucket.s3.us-east-1.amazonaws.com/img/favicon-ordinum.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Palette */
+            --navy: #0C204A;
+            --navy-light: #1A3A6E;
+            --graphite: #1B1F2A;
+            --white: #FFFFFF;
+            --gray-50: #F4F6FA;
+            --gray-100: #E6EAF2;
+            --gray-200: #D1D5E0;
+            --gray-400: #8A94A8;
+            
+            /* UI Config */
+            --transition-speed: 0.6s;
+            --stagger-delay: 0.1s;
+            --radius-lg: 16px;
+            --radius-sm: 8px;
+            --shadow-soft: 0 10px 40px -10px rgba(12, 32, 74, 0.08);
+            --shadow-hover: 0 20px 50px -10px rgba(12, 32, 74, 0.15);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            background-color: #050505; /* Letterbox color */
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* 
+           Responsive 16:9 Container 
+           Calculates the largest possible 16:9 box that fits in the viewport.
+        */
+        #app-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .stage {
+            position: relative;
+            background: var(--white);
+            overflow: hidden;
+            box-shadow: 0 0 0 1px rgba(255,255,255,0.05); /* Subtle border when letterboxed */
+            
+            /* Magic CSS for maintaining aspect ratio while fitting viewport */
+            width: 100%;
+            height: 100%;
+            max-width: 177.78vh; /* 16/9 = 1.777... */
+            max-height: 56.25vw; /* 9/16 = 0.5625... */
+            aspect-ratio: 16/9;
+        }
+
+        /* SLIDES LOGIC */
+        .slide {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1;
+            pointer-events: none;
+            transition: opacity var(--transition-speed) ease, visibility var(--transition-speed) ease;
+        }
+
+        /* Active State */
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 2;
+            pointer-events: auto;
+        }
+
+        /* Content Animations (Staggered) */
+        [data-anim] {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        /* Only animate when slide has class 'animate-ready' to allow replay */
+        .slide.animate-ready [data-anim] {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Delays */
+        .slide.animate-ready [data-anim="1"] { transition-delay: calc(var(--stagger-delay) * 1); }
+        .slide.animate-ready [data-anim="2"] { transition-delay: calc(var(--stagger-delay) * 2); }
+        .slide.animate-ready [data-anim="3"] { transition-delay: calc(var(--stagger-delay) * 3); }
+        .slide.animate-ready [data-anim="4"] { transition-delay: calc(var(--stagger-delay) * 4); }
+        .slide.animate-ready [data-anim="5"] { transition-delay: calc(var(--stagger-delay) * 5); }
+        .slide.animate-ready [data-anim="6"] { transition-delay: calc(var(--stagger-delay) * 6); }
+        .slide.animate-ready [data-anim="7"] { transition-delay: calc(var(--stagger-delay) * 7); }
+        .slide.animate-ready [data-anim="8"] { transition-delay: calc(var(--stagger-delay) * 8); }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            .slide, [data-anim] {
+                transition: none !important;
+                transform: none !important;
+                opacity: 1 !important;
+            }
+        }
+
+        /* TYPOGRAPHY & COMMON ELEMENTS */
+        h1 { font-size: 3.5rem; font-weight: 200; color: var(--navy); line-height: 1.1; letter-spacing: -1px; }
+        h2 { font-size: 2.75rem; font-weight: 200; color: var(--navy); line-height: 1.15; letter-spacing: -0.5px; }
+        h3 { font-size: 1.25rem; font-weight: 500; color: var(--navy); }
+        p { font-size: 1rem; font-weight: 300; color: var(--graphite); line-height: 1.65; }
+        
+        .section-tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--navy);
+            margin-bottom: 1.5rem;
+            opacity: 0.6;
+            display: block;
+        }
+
+        /* LAYOUT UTILS */
+        .two-col { display: flex; width: 100%; height: 100%; }
+        .col-content { flex: 1; padding: 5rem 4rem; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 2; }
+        .col-image { flex: 0 0 45%; position: relative; overflow: hidden; height: 100%; }
+        .col-image img { width: 100%; height: 100%; object-fit: cover; }
+        .col-image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, transparent 30%); }
+
+        /* CARDS */
+        .cards-row { display: flex; gap: 1.25rem; margin-top: 2.5rem; }
+        .card {
+            flex: 1;
+            background: var(--white);
+            border: 1px solid var(--gray-100);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--navy); }
+        .card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .card p { font-size: 0.85rem; color: var(--gray-400); }
+
+        /* BULLETS */
+        .bullet-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem; }
+        .bullet-item { display: flex; align-items: flex-start; gap: 1rem; }
+        .bullet-icon {
+            width: 2rem; height: 2rem; border-radius: 6px;
+            background: var(--gray-50); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .bullet-icon svg { width: 1rem; height: 1rem; stroke: var(--navy); fill: none; stroke-width: 2; }
+        .bullet-text h4 { font-size: 0.9rem; font-weight: 600; color: var(--navy); margin-bottom: 0.25rem; }
+        .bullet-text p { font-size: 0.8rem; color: var(--gray-400); line-height: 1.4; }
+
+        /* SLIDE SPECIFIC */
+        /* Cover */
+        .slide-cover { background-size: cover; background-position: center; }
+        .slide-cover::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(12, 32, 74, 0.94) 0%, rgba(12, 32, 74, 0.7) 100%); }
+        .cover-content { position: relative; z-index: 1; padding: 0 6rem; width: 100%; color: var(--white); display: flex; flex-direction: column; justify-content: center; height: 100%; }
+        .cover-logo { font-size: 4.5rem; font-weight: 200; letter-spacing: 8px; margin-bottom: 2rem; }
+        .cover-tagline { font-size: 1.75rem; font-weight: 300; margin-bottom: 1rem; opacity: 0.95; }
+        .cover-sub { font-size: 1.1rem; font-weight: 300; opacity: 0.7; margin-bottom: 4rem; }
+        .cover-footer { position: absolute; bottom: 3rem; left: 6rem; font-size: 0.9rem; opacity: 0.5; letter-spacing: 1px; }
+        .logo-symbol {
+            position: absolute; right: 8rem; top: 50%; transform: translateY(-50%); width: 15rem; height: 15rem; opacity: 0.15;
+            border-radius: 50%; border: 3px solid var(--white);
+        }
+        .logo-symbol::after { content: ''; position: absolute; width: 10rem; height: 10rem; right: -1rem; top: 50%; transform: translateY(-50%); background: var(--white); opacity: 0.3; border-radius: 50%; }
+
+        /* Dashboard Grid */
+        .dashboard-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2rem; }
+        .dashboard-grid .card { background: var(--gray-50); border: none; padding: 1.5rem; }
+        .dashboard-grid .card.span-2 { grid-column: span 1; } /* Layout adjustment */
+
+        /* Centered Slide */
+        .slide-centered { flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 4rem; background: var(--gray-50); }
+        .slide-centered p { max-width: 40rem; margin: 0 auto 3rem auto; }
+        .clients-row { display: flex; gap: 3rem; flex-wrap: wrap; justify-content: center; align-items: center; }
+        .client-logo { height: 3rem; width: auto; filter: grayscale(100%) opacity(0.4); transition: 0.3s; }
+        .client-logo:hover { filter: grayscale(0%) opacity(1); transform: scale(1.05); }
+
+        /* Contact */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; width: 100%; height: 100%; padding: 4rem 5rem; align-items: center; }
+        .contact-item { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; font-size: 1rem; color: var(--graphite); }
+        .contact-item svg { width: 1.25rem; height: 1.25rem; stroke: var(--navy); fill: none; stroke-width: 2; }
+        .contact-item a { color: var(--navy); text-decoration: none; border-bottom: 1px solid transparent; transition: 0.2s; }
+        .contact-item a:hover { border-color: var(--navy); }
+        .cta-button {
+            display: inline-flex; align-items: center; gap: 0.75rem; background: var(--navy); color: var(--white);
+            padding: 1rem 2rem; border-radius: var(--radius-sm); font-size: 0.95rem; font-weight: 500;
+            margin-top: 2rem; transition: 0.3s; text-decoration: none;
+        }
+        .cta-button:hover { background: var(--navy-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(12, 32, 74, 0.25); }
+        .contact-visual { height: 100%; border-radius: var(--radius-lg); overflow: hidden; position: relative; }
+        .contact-visual img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* CONTROLS (Floating Overlay) */
+        .nav-controls {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 100;
+            transition: color 0.3s;
+        }
+
+        /* Default (Light Theme Slides) */
+        .stage[data-theme="light"] .nav-btn {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.25);
+            color: var(--white);
+        }
+        .stage[data-theme="light"] .nav-btn:hover:not(:disabled) {
+            background: rgba(255,255,255,0.3);
+        }
+        .stage[data-theme="light"] .nav-counter {
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Dark Theme Slides (White Backgrounds) */
+        .stage[data-theme="dark"] .nav-btn {
+            background: var(--white);
+            border-color: var(--gray-200);
+            color: var(--navy);
+        }
+        .stage[data-theme="dark"] .nav-btn:hover:not(:disabled) {
+            background: var(--gray-50);
+            border-color: var(--navy);
+        }
+        .stage[data-theme="dark"] .nav-counter {
+            color: var(--gray-400);
+        }
+
+        .nav-btn {
+            width: 2.75rem;
+            height: 2.75rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+        .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .nav-btn svg { width: 1.1rem; height: 1.1rem; stroke: currentColor; fill: none; stroke-width: 2; }
+        
+        .nav-counter {
+            font-size: 0.85rem;
+            font-weight: 500;
+            min-width: 3rem;
+            text-align: center;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .nav-fullscreen { margin-left: 0.5rem; }
+
+        /* Decorative Blobs */
+        .blob { position: absolute; border-radius: 50% 40% 60% 50%; opacity: 0.04; background: var(--navy); z-index: 0; }
+        .blob-1 { width: 25rem; height: 25rem; right: -5rem; top: -5rem; }
+        .blob-2 { width: 18rem; height: 18rem; left: -4rem; bottom: -4rem; }
+    </style>
+</head>
+<body>
+
+    <div id="app-container">
+        <!-- Main Stage: Maintains 16:9 Aspect Ratio -->
+        <div class="stage" id="stage" data-theme="light">
+            
+            <!-- Slide 1: Cover -->
+            <div class="slide slide-cover" data-theme-ref="light" style="background-image: url('https://static.wixstatic.com/media/b25960_5a7fabaa7cc646dcb11535996327f51b~mv2.jpg')">
+                <div class="cover-content">
+                    <div class="cover-logo" data-anim="1">ORDINUM</div>
+                    <div class="cover-tagline" data-anim="2">Seu futuro, em ordem.</div>
+                    <div class="cover-sub" data-anim="3">Mais ordem, menos esforço.</div>
+                    <div class="cover-footer" data-anim="4">ordinum.com.br</div>
+                </div>
+                <div class="logo-symbol" data-anim="5"></div>
+            </div>
+
+            <!-- Slide 2: Quem Somos -->
+            <div class="slide" data-theme-ref="dark">
+                <div class="blob blob-1"></div>
+                <div class="blob blob-2"></div>
+                <div class="col-content" style="padding-right: 3rem;">
+                    <span class="section-tag" data-anim="1">Sobre nós</span>
+                    <h2 data-anim="2">Quem Somos</h2>
+                    <p style="margin-top: 1.5rem; max-width: 32rem;" data-anim="3">
+                        Somos uma Innovation Partner, Consultoria em automação e Software House com foco em eficiência. Organizamos operações, conectamos sistemas e criamos clareza em tempo real para decisões rápidas.
+                    </p>
+                    <div class="cards-row" data-anim="4">
+                        <div class="card" data-anim="5">
+                            <h3>Ordem</h3>
+                            <p>Processos estruturados e fluxos padronizados</p>
+                        </div>
+                        <div class="card" data-anim="6">
+                            <h3>Eficiência</h3>
+                            <p>Automação inteligente e redução de retrabalho</p>
+                        </div>
+                        <div class="card" data-anim="7">
+                            <h3>Clareza</h3>
+                            <p>Dados em tempo real para decisões assertivas</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-image">
+                    <img src="https://static.wixstatic.com/media/b25960_5375bfd1f4b544758e2faad1c15fa91b~mv2.png" alt="Sobre Ordinum">
+                </div>
+            </div>
+
+            <!-- Slide 3: Consultoria -->
+            <div class="slide" data-theme-ref="dark">
+                <div class="two-col">
+                    <div class="col-content">
+                        <span class="section-tag" data-anim="1">Serviço</span>
+                        <h2 data-anim="2">Consultoria</h2>
+                        <p style="margin-top: 1rem; max-width: 30rem;" data-anim="3">
+                            Organização de processos internos para execução clara, padronizada e eficiente, conectando áreas e removendo gargalos operacionais.
+                        </p>
+                        <div class="bullet-grid" data-anim="4">
+                            <div class="bullet-item" data-anim="5">
+                                <div class="bullet-icon"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+                                <div class="bullet-text">
+                                    <h4>Mapear fluxos</h4>
+                                    <p>Padronização de rotinas</p>
+                                </div>
+                            </div>
+                            <div class="bullet-item" data-anim="6">
+                                <div class="bullet-icon"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+                                <div class="bullet-text">
+                                    <h4>Reduzir retrabalho</h4>
+                                    <p>Eliminação de variabilidade</p>
+                                </div>
+                            </div>
+                            <div class="bullet-item" data-anim="7">
+                                <div class="bullet-icon"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+                                <div class="bullet-text">
+                                    <h4>Governança</h4>
+                                    <p>Papéis claros e responsabilidades</p>
+                                </div>
+                            </div>
+                            <div class="bullet-item" data-anim="8">
+                                <div class="bullet-icon"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+                                <div class="bullet-text">
+                                    <h4>Indicadores</h4>
+                                    <p>Métricas que apoiam decisões</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-image">
+                        <img src="https://static.wixstatic.com/media/b25960_bbecf1065e4d4b72987599812607adce~mv2.png/v1/fill/w_598,h_612,al_c,q_90/consulting.png" alt="Consultoria">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Desenvolvimento -->
+            <div class="slide" data-theme-ref="dark">
+                <div class="two-col">
+                    <div class="col-image">
+                        <img src="https://static.wixstatic.com/media/b25960_e9df52e3f9ad41e38cd72470eeea6b88~mv2.png/v1/fill/w_598,h_612,al_c,q_90/laptop.png" alt="Desenvolvimento">
+                    </div>
+                    <div class="col-content" style="padding-left: 3rem;">
+                        <span class="section-tag" data-anim="1">Serviço</span>
+                        <h2 data-anim="2">Software House</h2>
+                        <p style="margin-top: 1rem; max-width: 28rem;" data-anim="3">
+                            Transformamos ideias em soluções digitais sob medida, sistemas que evoluem com o negócio e entregam valor real.
+                        </p>
+                        <div class="bullet-grid" style="margin-top: 1.75rem;" data-anim="4">
+                            <div class="bullet-item" data-anim="5">
+                                <div class="bullet-icon"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+                                <div class="bullet-text"><h4>Sistemas Internos</h4><p>Portais operacionais</p></div>
+                            </div>
+                            <div class="bullet-item" data-anim="6">
+                                <div class="bullet-icon"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+                                <div class="bullet-text"><h4>APIs</h4><p>Arquitetura moderna</p></div>
+                            </div>
+                            <div class="bullet-item" data-anim="7">
+                                <div class="bullet-icon"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+                                <div class="bullet-text"><h4>Integração</h4><p>Conexão com legados</p></div>
+                            </div>
+                            <div class="bullet-item" data-anim="8">
+                                <div class="bullet-icon"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
+                                <div class="bullet-text"><h4>UX Funcional</h4><p>Interfaces produtivas</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: Automações -->
+            <div class="slide" data-theme-ref="dark">
+                <div class="two-col">
+                    <div class="col-content">
+                        <span class="section-tag" data-anim="1">Serviço</span>
+                        <h2 data-anim="2">Automações</h2>
+                        <p style="margin-top: 1rem; max-width: 30rem;" data-anim="3">
+                            Eliminamos tarefas repetitivas e criamos fluxos autônomos. Libere sua equipe para atividades estratégicas.
+                        </p>
+                        <div class="cards-row" style="margin-top: 2rem;">
+                            <div class="card" data-anim="4">
+                                <h3>Integração</h3>
+                                <p>Sincronizamos ERP, CRM e planilhas</p>
+                            </div>
+                            <div class="card" data-anim="5">
+                                <h3>Alertas</h3>
+                                <p>Notificações em tempo real</p>
+                            </div>
+                        </div>
+                        <div class="cards-row" style="margin-top: 1rem;">
+                            <div class="card" data-anim="6">
+                                <h3>Financeiro</h3>
+                                <p>Conciliação automática</p>
+                            </div>
+                            <div class="card" data-anim="7">
+                                <h3>Documentos</h3>
+                                <p>Classificação via IA</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-image">
+                        <img src="https://static.wixstatic.com/media/b25960_54f637d3dc5545d1a0bb689c65e0e184~mv2.png/v1/fill/w_598,h_612,al_c,q_90/startup.png" alt="Automações">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 6: Dashboards -->
+            <div class="slide" data-theme-ref="dark">
+                <div class="two-col">
+                    <div class="col-image">
+                        <img src="https://static.wixstatic.com/media/b25960_ef313e3e766c4b948e264f185c3ccf74~mv2.png/v1/fill/w_598,h_612,al_c,q_90/dashboard.png" alt="Dashboards">
+                    </div>
+                    <div class="col-content" style="padding-left: 3rem;">
+                        <span class="section-tag" data-anim="1">Serviço</span>
+                        <h2 data-anim="2">Dashboards</h2>
+                        <p style="margin-top: 0.75rem; margin-bottom: 1.5rem;" data-anim="3">
+                            Dados em tempo real e KPIs personalizados para decisões assertivas.
+                        </p>
+                        <div class="dashboard-grid">
+                            <div class="card" data-anim="4"><h3>Visão Unificada</h3><p>Indicadores críticos centralizados</p></div>
+                            <div class="card" data-anim="5"><h3>Alertas Proativos</h3><p>Notificações por limiares</p></div>
+                            <div class="card" data-anim="6"><h3>Métricas</h3><p>Acompanhamento de performance</p></div>
+                            <div class="card" data-anim="7"><h3>Drill-down</h3><p>Detalhamento instantâneo</p></div>
+                            <div class="card span-2" data-anim="8"><h3>Data-driven</h3><p>Informações precisas para o dia a dia</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 7: Clientes -->
+            <div class="slide slide-centered" data-theme-ref="dark">
+                <span class="section-tag" data-anim="1">Nossos Meios</span>
+                <h2 data-anim="2">Presença e Resultados</h2>
+                <p data-anim="3">Operação conectada, dados em movimento, decisões mais rápidas.</p>
+                <div class="clients-row" data-anim="4">
+                    <img src="https://static.wixstatic.com/media/b25960_a784e2432941404d9de2b260823845d0~mv2.png" alt="Cliente" class="client-logo" data-anim="5">
+                    <img src="https://static.wixstatic.com/media/b25960_3f5fc717650241818bae8bc8987b4507~mv2.png" alt="Cliente" class="client-logo" data-anim="6">
+                    <img src="https://static.wixstatic.com/media/b25960_f4a8191108ac449695114060e47e630f~mv2.png" alt="Cliente" class="client-logo" data-anim="7">
+                    <img src="https://static.wixstatic.com/media/b25960_60005a121b284a38b1d4fbfd83558ec1~mv2.png" alt="Cliente" class="client-logo" data-anim="8">
+                    <img src="https://static.wixstatic.com/media/b25960_d45cdde66d5b4d3588d6ab4fe883f798~mv2.png" alt="Cliente" class="client-logo" data-anim="8">
+                </div>
+            </div>
+
+            <!-- Slide 8: Contato -->
+            <div class="slide" data-theme-ref="dark">
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <span class="section-tag" data-anim="1">Contato</span>
+                        <h2 data-anim="2">Vamos Conversar</h2>
+                        <div style="margin-top: 2rem;">
+                            <div class="contact-item" data-anim="3">
+                                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                                <a href="https://ordinum.com.br" target="_blank">ordinum.com.br</a>
+                            </div>
+                            <div class="contact-item" data-anim="4">
+                                <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                <span>Uberlândia, MG</span>
+                            </div>
+                            <div class="contact-item" data-anim="5">
+                                <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                <span>(34) 3199-8308</span>
+                            </div>
+                            <div class="contact-item" data-anim="6">
+                                <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                                <a href="mailto:contato@ordinum.com.br">contato@ordinum.com.br</a>
+                            </div>
+                        </div>
+                        <a href="https://ordinum.com.br" class="cta-button" data-anim="7">
+                            Agendar diagnóstico
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </a>
+                        <div style="margin-top: 3rem; font-size: 0.75rem; color: var(--gray-400);" data-anim="8">© 2026 Ordinum. Todos os direitos reservados.</div>
+                    </div>
+                    <div class="contact-visual" data-anim="8">
+                        <img src="https://static.wixstatic.com/media/b25960_5375bfd1f4b544758e2faad1c15fa91b~mv2.png" alt="Contato Ordinum">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fixed Controls (Never moves between slides) -->
+            <div class="nav-controls">
+                <button class="nav-btn" id="btn-prev" aria-label="Slide anterior">
+                    <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <span class="nav-counter" id="nav-counter">1/8</span>
+                <button class="nav-btn" id="btn-next" aria-label="Próximo slide">
+                    <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
+                <button class="nav-btn nav-fullscreen" id="btn-fullscreen" aria-label="Alternar tela cheia">
+                    <svg viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // DOM Elements
+            const stage = document.getElementById('stage');
+            const slides = document.querySelectorAll('.slide');
+            const btnPrev = document.getElementById('btn-prev');
+            const btnNext = document.getElementById('btn-next');
+            const counter = document.getElementById('nav-counter');
+            const btnFullscreen = document.getElementById('btn-fullscreen');
+            
+            // State
+            let currentIndex = 0;
+            const totalSlides = slides.length;
+            let touchStartX = 0;
+            let isTransitioning = false;
+
+            // Initialize
+            function init() {
+                const hashIndex = getHashIndex();
+                currentIndex = (hashIndex >= 0 && hashIndex < totalSlides) ? hashIndex : 0;
+                
+                // Show initial slide immediately (no animation lag)
+                activateSlide(currentIndex, false);
+                
+                // Event Listeners
+                btnPrev.addEventListener('click', () => changeSlide(currentIndex - 1));
+                btnNext.addEventListener('click', () => changeSlide(currentIndex + 1));
+                btnFullscreen.addEventListener('click', toggleFullscreen);
+                
+                document.addEventListener('keydown', handleKeydown);
+                window.addEventListener('hashchange', () => {
+                    const idx = getHashIndex();
+                    if(idx !== currentIndex && idx >= 0 && idx < totalSlides) {
+                        changeSlide(idx);
+                    }
+                });
+
+                // Swipe
+                document.addEventListener('touchstart', e => touchStartX = e.changedTouches[0].screenX, {passive: true});
+                document.addEventListener('touchend', handleSwipe, {passive: true});
+            }
+
+            // Core Navigation Logic
+            function changeSlide(index) {
+                if (index < 0 || index >= totalSlides || index === currentIndex || isTransitioning) return;
+                
+                isTransitioning = true;
+                
+                // Deactivate current
+                const currentSlide = slides[currentIndex];
+                currentSlide.classList.remove('active', 'animate-ready');
+                
+                // Update Index
+                currentIndex = index;
+                
+                // Activate next
+                activateSlide(currentIndex, true);
+                
+                // Cooldown for transition stability
+                setTimeout(() => { isTransitioning = false; }, 600);
+            }
+
+            function activateSlide(index, animate) {
+                const slide = slides[index];
+                
+                // 1. Theme Update
+                const theme = slide.getAttribute('data-theme-ref') || 'light';
+                stage.setAttribute('data-theme', theme);
+
+                // 2. UI Updates
+                counter.textContent = `${index + 1}/${totalSlides}`;
+                btnPrev.disabled = index === 0;
+                btnNext.disabled = index === totalSlides - 1;
+                updateHash(index);
+
+                // 3. Activation
+                slide.classList.add('active');
+
+                // 4. Trigger Animations (Reflow hack to restart CSS animations)
+                if (animate) {
+                    void slide.offsetWidth; // Trigger reflow
+                    slide.classList.add('animate-ready');
+                } else {
+                    slide.classList.add('animate-ready');
+                }
+            }
+
+            // Utils
+            function getHashIndex() {
+                const match = window.location.hash.match(/#\/(\d+)/);
+                return match ? parseInt(match[1], 10) - 1 : -1;
+            }
+
+            function updateHash(index) {
+                history.replaceState(null, null, `#/${index + 1}`);
+            }
+
+            function handleKeydown(e) {
+                if(isTransitioning) return;
+                switch(e.key) {
+                    case 'ArrowRight':
+                    case 'PageDown':
+                    case ' ':
+                        e.preventDefault();
+                        changeSlide(currentIndex + 1);
+                        break;
+                    case 'ArrowLeft':
+                    case 'PageUp':
+                        e.preventDefault();
+                        changeSlide(currentIndex - 1);
+                        break;
+                    case 'Home':
+                        e.preventDefault();
+                        changeSlide(0);
+                        break;
+                    case 'End':
+                        e.preventDefault();
+                        changeSlide(totalSlides - 1);
+                        break;
+                    case 'f':
+                    case 'F':
+                        toggleFullscreen();
+                        break;
+                }
+            }
+
+            function handleSwipe(e) {
+                const touchEndX = e.changedTouches[0].screenX;
+                const diff = touchStartX - touchEndX;
+                if (Math.abs(diff) > 50) { // Threshold
+                    if (diff > 0) changeSlide(currentIndex + 1);
+                    else changeSlide(currentIndex - 1);
+                }
+            }
+
+            function toggleFullscreen() {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen().catch(err => console.log(err));
+                } else {
+                    document.exitFullscreen();
+                }
+            }
+
+            // Start
+            init();
+        })();
+    </script>
+</body>
+</html>
