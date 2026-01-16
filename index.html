@@ -1,1138 +1,1565 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ordinum | Seu futuro, em ordem</title>
-<meta name="description" content="Ordinum — Transformamos operações manuais em sistemas inteligentes. Mais ordem, menos esforço.">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Ordinum | Seu futuro, em ordem</title>
+        <meta
+            name="description"
+            content="Ordinum — Transformamos operações manuais em sistemas inteligentes. Mais ordem, menos esforço."
+        />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-<!-- Google Fonts: Montserrat -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+        <!-- Google Fonts: Montserrat -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&display=swap"
+            rel="stylesheet"
+        />
 
-<!-- CONFIGURATION -->
-<script>
-    const SITE_CONFIG = {
-        webhooks: {
-            contactForm: "https://operation.ordinum.com.br/webhook/lobby/?workflow=skdahBstQI4F8yO5"
-        },
-        brandName: "ORDINUM",
-        tagline: "Seu futuro, em ordem",
-        contactEmail: "contato@ordinum.com.br",
-        contactPhone: "(34) 3199-8308",
-        contactAddress: "Uberlândia, MG",
-        whatsappLink: "https://api.whatsapp.com/send/?phone=553431998308&text=Ol%C3%A1%21+Gostaria+de+ordenar+meus+processos%21&type=phone_number&app_absent=0",
-        social: {
-            instagram: "https://www.instagram.com/ordinum.br/",
-            linkedin: "https://www.linkedin.com/company/ordinum"
-        },
-        // FIX: map center (Coordenadas Uberlândia com Zoom 16)
-        mapEmbedSrc: "https://www.google.com/maps?q=-18.916113414750352,-48.274286918089764&z=16&output=embed",
-        mapFallback: {
-            message: "Visualize nossa localização no Google Maps",
-            // FIX: map center fallback link
-            link: "https://www.google.com/maps?q=-18.916113414750352,-48.274286918089764&z=16"
-        },
-        theme: {
-            colors: {
-                navy: "#0C204A",
-                navyLight: "#1A3A6E",
-                graphite: "#2D2D2D",
-                gray600: "#4A4A4A",
-                gray400: "#8A8A8A",
-                gray200: "#E5E5E5",
-                gray100: "#F5F5F5",
-                gray50: "#FAFAFA",
-                white: "#FFFFFF"
+        <!-- CONFIGURATION -->
+        <script>
+            const SITE_CONFIG = {
+                webhooks: {
+                    contactForm: "https://operation.ordinum.com.br/webhook/lobby/?workflow=skdahBstQI4F8yO5",
+                },
+                brandName: "ORDINUM",
+                tagline: "Seu futuro, em ordem",
+                contactEmail: "contato@ordinum.com.br",
+                contactPhone: "(34) 3199-8308",
+                contactAddress: "Uberlândia, MG",
+                whatsappLink:
+                    "https://api.whatsapp.com/send/?phone=553431998308&text=Ol%C3%A1%21+Gostaria+de+ordenar+meus+processos%21&type=phone_number&app_absent=0",
+                social: {
+                    instagram: "https://www.instagram.com/ordinum.br/",
+                    linkedin: "https://www.linkedin.com/company/ordinum",
+                },
+                // FIX: map center (Coordenadas Uberlândia com Zoom 16)
+                mapEmbedSrc: "https://www.google.com/maps?q=-18.916113414750352,-48.274286918089764&z=16&output=embed",
+                mapFallback: {
+                    message: "Visualize nossa localização no Google Maps",
+                    // FIX: map center fallback link
+                    link: "https://www.google.com/maps?q=-18.916113414750352,-48.274286918089764&z=16",
+                },
+                theme: {
+                    colors: {
+                        navy: "#0C204A",
+                        navyLight: "#1A3A6E",
+                        graphite: "#2D2D2D",
+                        gray600: "#4A4A4A",
+                        gray400: "#8A8A8A",
+                        gray200: "#E5E5E5",
+                        gray100: "#F5F5F5",
+                        gray50: "#FAFAFA",
+                        white: "#FFFFFF",
+                    },
+                },
+                assets: {
+                    // Using a text logo fallback if image fails or for this implementation
+                    favicon: "https://ordinum-default-bucket.s3.us-east-1.amazonaws.com/img/favicon-ordinum.png",
+                    heroBg: "https://static.wixstatic.com/media/b25960_5a7fabaa7cc646dcb11535996327f51b~mv2.jpg",
+                    solution1:
+                        "https://static.wixstatic.com/media/b25960_54f637d3dc5545d1a0bb689c65e0e184~mv2.png/v1/fill/w_598,h_612,al_c,q_90/startup.png",
+                    solution2:
+                        "https://static.wixstatic.com/media/b25960_e9df52e3f9ad41e38cd72470eeea6b88~mv2.png/v1/fill/w_598,h_612,al_c,q_90/laptop.png",
+                    solution3:
+                        "https://static.wixstatic.com/media/b25960_ef313e3e766c4b948e264f185c3ccf74~mv2.png/v1/fill/w_598,h_612,al_c,q_90/dashboard.png",
+                    solution4:
+                        "https://static.wixstatic.com/media/b25960_bbecf1065e4d4b72987599812607adce~mv2.png/v1/fill/w_598,h_612,al_c,q_90/consulting.png",
+                    aboutBg: "https://static.wixstatic.com/media/b25960_5375bfd1f4b544758e2faad1c15fa91b~mv2.png",
+                    client1: "https://static.wixstatic.com/media/b25960_a784e2432941404d9de2b260823845d0~mv2.png",
+                    client2: "https://static.wixstatic.com/media/b25960_3f5fc717650241818bae8bc8987b4507~mv2.png",
+                    client3: "https://static.wixstatic.com/media/b25960_f4a8191108ac449695114060e47e630f~mv2.png",
+                    client4: "https://static.wixstatic.com/media/b25960_60005a121b284a38b1d4fbfd83558ec1~mv2.png",
+                    client5: "https://static.wixstatic.com/media/b25960_d45cdde66d5b4d3588d6ab4fe883f798~mv2.png",
+                },
+            };
+
+            // Set Favicon
+            const link = document.createElement("link");
+            link.rel = "icon";
+            link.href = SITE_CONFIG.assets.favicon;
+            document.head.appendChild(link);
+        </script>
+
+        <!-- STYLES -->
+        <style>
+            /* VARIABLES */
+            :root {
+                /* Colors */
+                --color-navy: #0c204a;
+                --color-navy-light: #1a3a6e;
+                --color-graphite: #2d2d2d;
+                --color-gray-600: #4a4a4a;
+                --color-gray-400: #8a8a8a;
+                --color-gray-200: #e5e5e5;
+                --color-gray-100: #f5f5f5;
+                --color-gray-50: #fafafa;
+                --color-white: #ffffff;
+
+                /* Typography */
+                --font-main: "Montserrat", sans-serif;
+                --font-size-body: 16px;
+                --line-height-body: 1.6;
+
+                /* Layout */
+                --container-width: 1200px;
+                --container-padding: 24px;
+                --header-height: 80px;
+                --border-radius-card: 8px;
+                --border-radius-btn: 6px;
+
+                /* Animation */
+                --transition-base: 0.2s ease;
+                --transition-smooth: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             }
-        },
-        assets: {
-            // Using a text logo fallback if image fails or for this implementation
-            favicon: "https://ordinum-default-bucket.s3.us-east-1.amazonaws.com/img/favicon-ordinum.png",
-            heroBg: "https://static.wixstatic.com/media/b25960_5a7fabaa7cc646dcb11535996327f51b~mv2.jpg",
-            solution1: "https://static.wixstatic.com/media/b25960_54f637d3dc5545d1a0bb689c65e0e184~mv2.png/v1/fill/w_598,h_612,al_c,q_90/startup.png",
-            solution2: "https://static.wixstatic.com/media/b25960_e9df52e3f9ad41e38cd72470eeea6b88~mv2.png/v1/fill/w_598,h_612,al_c,q_90/laptop.png",
-            solution3: "https://static.wixstatic.com/media/b25960_ef313e3e766c4b948e264f185c3ccf74~mv2.png/v1/fill/w_598,h_612,al_c,q_90/dashboard.png",
-            solution4: "https://static.wixstatic.com/media/b25960_bbecf1065e4d4b72987599812607adce~mv2.png/v1/fill/w_598,h_612,al_c,q_90/consulting.png",
-            aboutBg: "https://static.wixstatic.com/media/b25960_5375bfd1f4b544758e2faad1c15fa91b~mv2.png",
-            client1: "https://static.wixstatic.com/media/b25960_a784e2432941404d9de2b260823845d0~mv2.png",
-            client2: "https://static.wixstatic.com/media/b25960_3f5fc717650241818bae8bc8987b4507~mv2.png",
-            client3: "https://static.wixstatic.com/media/b25960_f4a8191108ac449695114060e47e630f~mv2.png",
-            client4: "https://static.wixstatic.com/media/b25960_60005a121b284a38b1d4fbfd83558ec1~mv2.png",
-            client5: "https://static.wixstatic.com/media/b25960_d45cdde66d5b4d3588d6ab4fe883f798~mv2.png"
-        }
-    };
 
-    // Set Favicon
-    const link = document.createElement('link');
-    link.rel = 'icon';
-    link.href = SITE_CONFIG.assets.favicon;
-    document.head.appendChild(link);
-</script>
-
-<!-- STYLES -->
-<style>
-    /* VARIABLES */
-    :root {
-        /* Colors */
-        --color-navy: #0C204A;
-        --color-navy-light: #1A3A6E;
-        --color-graphite: #2D2D2D;
-        --color-gray-600: #4A4A4A;
-        --color-gray-400: #8A8A8A;
-        --color-gray-200: #E5E5E5;
-        --color-gray-100: #F5F5F5;
-        --color-gray-50: #FAFAFA;
-        --color-white: #FFFFFF;
-        
-        /* Typography */
-        --font-main: 'Montserrat', sans-serif;
-        --font-size-body: 16px;
-        --line-height-body: 1.6;
-
-        /* Layout */
-        --container-width: 1200px;
-        --container-padding: 24px;
-        --header-height: 80px;
-        --border-radius-card: 8px;
-        --border-radius-btn: 6px;
-        
-        /* Animation */
-        --transition-base: 0.2s ease;
-        --transition-smooth: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-
-    /* RESET & BASE */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    html { scroll-behavior: smooth; font-size: 16px; }
-    
-    body {
-        font-family: var(--font-main);
-        color: var(--color-gray-600);
-        line-height: var(--line-height-body);
-        background-color: var(--color-white);
-        overflow-x: hidden;
-        -webkit-font-smoothing: antialiased;
-    }
-
-    a { text-decoration: none; color: inherit; transition: var(--transition-base); }
-    ul { list-style: none; }
-    img { max-width: 100%; display: block; height: auto; }
-    button { font-family: inherit; border: none; background: none; cursor: pointer; }
-
-    /* TYPOGRAPHY */
-    h1, h2, h3, h4, h5, h6 {
-        color: var(--color-navy);
-        font-weight: 300; /* Light by default for premium feel */
-        line-height: 1.2;
-    }
-
-    .text-strong { font-weight: 600; }
-    .text-center { text-align: center; }
-    
-    .section-tag {
-        display: block;
-        font-size: 12px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        color: var(--color-navy);
-        margin-bottom: 16px;
-    }
-
-    /* UTILITIES */
-    .container {
-        width: 100%;
-        max-width: var(--container-width);
-        margin: 0 auto;
-        padding: 0 var(--container-padding);
-    }
-
-    .btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 12px 28px;
-        font-weight: 500;
-        font-size: 15px;
-        border-radius: var(--border-radius-btn);
-        transition: all var(--transition-base);
-    }
-
-    .btn-primary {
-        background-color: var(--color-navy);
-        color: var(--color-white);
-    }
-    .btn-primary:hover {
-        background-color: var(--color-navy-light);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(12, 32, 74, 0.2);
-    }
-    .btn-primary:disabled {
-        background-color: var(--color-gray-400);
-        transform: none;
-        box-shadow: none;
-        cursor: not-allowed;
-    }
-
-    .btn-outline {
-        border: 1px solid var(--color-white);
-        color: var(--color-white);
-    }
-    .btn-outline:hover {
-        background-color: var(--color-white);
-        color: var(--color-navy);
-    }
-
-    .btn-text {
-        color: var(--color-navy);
-        padding: 0;
-        font-weight: 600;
-        border-bottom: 1px solid transparent;
-    }
-    .btn-text:hover { border-color: var(--color-navy); }
-
-    /* FIX: skip-link (Hidden completely with transform, shows only on focus) */
-    .skip-link {
-        position: absolute; top: 0; left: 0; background: var(--color-navy); color: white; padding: 8px; z-index: 2000;
-        transform: translateY(-200%);
-    }
-    .skip-link:focus { transform: translateY(0); }
-
-    /* HEADER */
-    .header {
-        position: fixed;
-        top: 0; left: 0; width: 100%;
-        height: var(--header-height);
-        z-index: 1000;
-        background-color: transparent;
-        transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    
-    .header.scrolled {
-        background-color: rgba(255, 255, 255, 0.98);
-        backdrop-filter: blur(10px);
-        box-shadow: 0 2px 20px rgba(0,0,0,0.05);
-    }
-
-    .header .container {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .brand-logo {
-        font-size: 24px;
-        font-weight: 600;
-        letter-spacing: 1px;
-        color: var(--color-white); /* Initial state on dark hero */
-        z-index: 1002;
-    }
-    
-    .header.scrolled .brand-logo, 
-    .header.menu-open .brand-logo { color: var(--color-navy); }
-
-    .nav-desktop { display: flex; gap: 32px; align-items: center; }
-    
-    .nav-link {
-        color: var(--color-white);
-        font-size: 15px;
-        font-weight: 400;
-        position: relative;
-    }
-    
-    .header.scrolled .nav-link { color: var(--color-navy); }
-
-    .nav-link::after {
-        content: '';
-        position: absolute; bottom: -4px; left: 50%; width: 0; height: 1px;
-        background-color: currentColor;
-        transition: width 0.3s ease, left 0.3s ease;
-    }
-    .nav-link:hover::after, .nav-link.active::after { width: 100%; left: 0; }
-
-    .header-cta {
-        background-color: var(--color-white);
-        color: var(--color-navy);
-        padding: 10px 24px;
-    }
-    .header.scrolled .header-cta {
-        background-color: var(--color-navy);
-        color: var(--color-white);
-    }
-
-    /* Mobile Menu Toggle */
-    .mobile-toggle {
-        display: none;
-        flex-direction: column;
-        gap: 6px;
-        z-index: 1002;
-    }
-    .bar {
-        width: 24px; height: 2px; background-color: var(--color-white);
-        transition: all 0.3s ease;
-    }
-    .header.scrolled .bar { background-color: var(--color-navy); }
-    .header.menu-open .bar { background-color: var(--color-navy); }
-    
-    /* Mobile Menu State */
-    .header.menu-open .bar:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
-    .header.menu-open .bar:nth-child(2) { opacity: 0; }
-    .header.menu-open .bar:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
-
-    /* HERO SECTION */
-    .hero {
-        position: relative;
-        height: 90vh;
-        min-height: 600px;
-        display: flex;
-        align-items: center;
-        background-size: cover;
-        background-position: center;
-        color: var(--color-white);
-    }
-
-    .hero-overlay {
-        position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-        background: linear-gradient(135deg, rgba(12, 32, 74, 0.85) 0%, rgba(12, 32, 74, 0.5) 100%);
-        z-index: 1;
-    }
-
-    .hero-content {
-        position: relative;
-        z-index: 2;
-        max-width: 800px;
-        padding-top: 60px;
-        opacity: 0;
-        transform: translateY(20px);
-        animation: fadeUp 1s ease forwards 0.3s;
-    }
-
-    .hero-tagline {
-        display: block;
-        font-size: 12px;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-        margin-bottom: 24px;
-        opacity: 0.8;
-        font-weight: 500;
-    }
-
-    .hero-title {
-        font-size: 56px;
-        margin-bottom: 24px;
-        font-weight: 300;
-        color: white;
-    }
-
-    .hero-desc {
-        font-size: 18px;
-        line-height: 1.6;
-        margin-bottom: 40px;
-        max-width: 600px;
-        opacity: 0.9;
-        color: white;
-    }
-
-    .hero-actions { display: flex; gap: 16px; }
-
-    /* SECTION COMMON */
-    .section { padding: 80px 0; }
-    .bg-light { background-color: var(--color-gray-50); }
-
-    /* VALUES (ICONS) */
-    .values-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 48px;
-    }
-
-    .value-item {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .value-icon {
-        width: 64px; height: 64px;
-        margin-bottom: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .value-icon svg { width: 48px; height: 48px; stroke: var(--color-navy); fill: none; stroke-width: 1.5; }
-
-    .value-title { font-size: 20px; font-weight: 500; margin-bottom: 12px; }
-    .value-text { font-size: 16px; color: var(--color-gray-600); }
-
-    /* SOLUTIONS */
-    .section-header { text-align: center; margin-bottom: 60px; }
-    .section-title { font-size: 40px; margin-bottom: 16px; }
-    
-    .solutions-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 32px;
-    }
-
-    .solution-card {
-        background: var(--color-white);
-        border-radius: var(--border-radius-card);
-        border: 1px solid var(--color-gray-200);
-        overflow: hidden;
-        transition: all 0.3s ease;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .solution-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 24px rgba(12, 32, 74, 0.08);
-        border-color: var(--color-navy-light);
-    }
-
-    .solution-img {
-        width: 100%;
-        aspect-ratio: 16/9;
-        object-fit: cover;
-        background-color: var(--color-gray-200);
-    }
-
-    .solution-body { padding: 32px; flex: 1; display: flex; flex-direction: column; }
-    .solution-title { font-size: 22px; font-weight: 500; margin-bottom: 12px; }
-    .solution-desc { margin-bottom: 24px; flex-grow: 1; font-size: 15px; }
-    
-    /* ABOUT */
-    .about-grid {
-        display: grid;
-        grid-template-columns: 1.2fr 0.8fr;
-        gap: 64px;
-        align-items: center;
-    }
-    
-    .about-content p { margin-bottom: 20px; }
-    .about-img {
-        border-radius: var(--border-radius-card);
-        box-shadow: 20px 20px 0 var(--color-gray-100);
-    }
-
-    /* SLOGAN DIVIDER */
-    .divider-slogan {
-        background-color: var(--color-navy);
-        padding: 80px 0;
-        text-align: center;
-        position: relative;
-    }
-    .slogan-text {
-        color: var(--color-white);
-        font-size: 32px;
-        font-weight: 300;
-        letter-spacing: 1px;
-    }
-    .slogan-line {
-        width: 60px; height: 1px; background-color: rgba(255,255,255,0.3);
-        margin: 24px auto 0;
-    }
-
-    /* CLIENTS */
-    .clients-grid {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 48px;
-        align-items: center;
-    }
-    .client-logo {
-        height: 50px;
-        width: auto;
-        filter: grayscale(100%) opacity(0.5);
-        transition: all 0.3s ease;
-    }
-    .client-logo:hover { filter: grayscale(0%) opacity(1); }
-
-    /* CONTACT */
-    .contact-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 64px;
-    }
-    
-    .contact-info-item {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        margin-bottom: 20px;
-        font-size: 16px;
-    }
-    .contact-icon { width: 20px; height: 20px; stroke: var(--color-navy); }
-
-    .social-links { display: flex; gap: 16px; margin-top: 32px; }
-    .social-circle {
-        width: 40px; height: 40px;
-        border: 1px solid var(--color-navy);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--color-navy);
-        transition: all 0.3s ease;
-    }
-    .social-circle:hover { background-color: var(--color-navy); color: var(--color-white); }
-    .social-circle svg { width: 18px; height: 18px; fill: currentColor; }
-
-    .form-group { margin-bottom: 24px; }
-    .form-label { display: block; font-size: 13px; font-weight: 600; color: var(--color-navy); margin-bottom: 8px; }
-    .form-input {
-        width: 100%;
-        padding: 12px 0;
-        border: none;
-        border-bottom: 1px solid var(--color-gray-200);
-        font-family: inherit;
-        font-size: 16px;
-        background: transparent;
-        outline: none;
-        transition: border-color 0.3s ease;
-    }
-    .form-input:focus { border-bottom: 2px solid var(--color-navy); }
-    textarea.form-input { resize: vertical; min-height: 80px; }
-
-    /* MAP */
-    .map-wrapper {
-        position: relative;
-        width: 100%;
-        height: 400px;
-        background-color: var(--color-gray-200);
-    }
-    .map-frame { width: 100%; height: 100%; border: 0; }
-    
-    .map-fallback {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        display: flex; flex-direction: column; align-items: center; justify-content: center;
-        background-color: var(--color-gray-100);
-        z-index: 10;
-    }
-
-    /* FOOTER */
-    .footer {
-        background-color: var(--color-navy);
-        color: var(--color-white);
-        padding: 64px 0 32px;
-    }
-    .footer-grid {
-        display: grid;
-        grid-template-columns: 2fr 1fr 1fr;
-        gap: 40px;
-        margin-bottom: 60px;
-    }
-    .footer-brand h3 { color: white; margin-bottom: 16px; font-weight: 500; }
-    .footer-brand p { opacity: 0.7; max-width: 300px; font-size: 14px; }
-    
-    .footer-col h4 { color: white; font-size: 16px; font-weight: 600; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 1px; }
-    .footer-link { display: block; opacity: 0.7; margin-bottom: 12px; font-size: 14px; }
-    .footer-link:hover { opacity: 1; text-decoration: underline; }
-    
-    .copyright {
-        border-top: 1px solid rgba(255,255,255,0.1);
-        padding-top: 32px;
-        text-align: center;
-        font-size: 13px;
-        opacity: 0.5;
-    }
-
-    /* RESPONSIVE */
-    @media (max-width: 992px) {
-        :root { --container-padding: 20px; }
-        .hero-title { font-size: 42px; }
-        .values-grid { gap: 32px; }
-        .about-grid { grid-template-columns: 1fr; gap: 40px; }
-        .footer-grid { grid-template-columns: 1fr 1fr; }
-    }
-
-    @media (max-width: 768px) {
-        .mobile-toggle { display: flex; }
-        .nav-desktop {
-            position: fixed;
-            top: 0; right: 0;
-            height: 100vh;
-            width: 280px;
-            background-color: var(--color-navy);
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 40px;
-            transform: translateX(100%);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
-        }
-        .header.menu-open .nav-desktop { transform: translateX(0); }
-        
-        .nav-link { font-size: 20px; color: white !important; }
-        .header-cta { width: 100%; text-align: center; margin-top: 20px; }
-
-        .hero { height: auto; padding: 120px 0 80px; text-align: left; }
-        .hero-title { font-size: 36px; }
-        
-        .values-grid { grid-template-columns: 1fr; gap: 40px; }
-        .solutions-grid { grid-template-columns: 1fr; }
-        .contact-grid { grid-template-columns: 1fr; gap: 48px; }
-        .footer-grid { grid-template-columns: 1fr; text-align: center; }
-        .footer-brand p, .footer-brand { margin: 0 auto; }
-    }
-
-    /* ANIMATION UTILS */
-    @keyframes fadeUp {
-        to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .hidden { display: none !important; }
-</style>
-</head>
-<body>
-
-<a href="#main" class="skip-link">Pular para conteúdo</a>
-
-<!-- HEADER -->
-<header class="header" id="header">
-    <div class="container">
-        <a href="#" class="brand-logo" id="brand-logo">ORDINUM</a>
-        
-        <button class="mobile-toggle" aria-label="Abrir Menu" id="menu-toggle">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </button>
-
-        <nav class="nav-desktop" id="nav-menu">
-            <a href="#hero" class="nav-link">Início</a>
-            <a href="#solucoes" class="nav-link">Soluções</a>
-            <a href="#sobre" class="nav-link">Sobre</a>
-            <a href="#meios" class="nav-link">Meios</a>
-            <a href="#contato" class="btn btn-primary header-cta">Contato</a>
-        </nav>
-    </div>
-</header>
-
-<main id="main">
-    <!-- HERO -->
-    <section id="hero" class="hero">
-        <div class="hero-overlay"></div>
-        <div class="container hero-content">
-            <span class="hero-tagline" id="hero-tagline">SEU FUTURO EM ORDEM</span>
-            <h1 class="hero-title" id="hero-title">Ordem dos Processos</h1>
-            <p class="hero-desc" id="hero-subtitle">Transformamos operações manuais e descentralizadas em sistemas inteligentes e autônomos. Mais ordem, menos esforço.</p>
-            <div class="hero-actions">
-                <a href="#contato" class="btn btn-primary">Começar Agora</a>
-                <a href="#solucoes" class="btn btn-outline">Conheça</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- VALUES -->
-    <section id="valores" class="section">
-        <div class="container">
-            <div class="values-grid">
-                <!-- Ordem -->
-                <div class="value-item">
-                    <div class="value-icon">
-                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                    </div>
-                    <h3 class="value-title">Ordem</h3>
-                    <p class="value-text">Estruturar fluxos internos para uma execução fluida, organizada e sem gargalos operacionais.</p>
-                </div>
-                <!-- Eficiência -->
-                <div class="value-item">
-                    <div class="value-icon">
-                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                    </div>
-                    <h3 class="value-title">Eficiência</h3>
-                    <p class="value-text">Reduzir esforços manuais e eliminar redundâncias com a implementação de processos inteligentes.</p>
-                </div>
-                <!-- Clareza -->
-                <div class="value-item">
-                    <div class="value-icon">
-                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    </div>
-                    <h3 class="value-title">Clareza</h3>
-                    <p class="value-text">Trazer transparência total às operações, permitindo decisões baseadas em dados reais.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SOLUTIONS -->
-    <section id="solucoes" class="section bg-light">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">SERVIÇOS</span>
-                <h2 class="section-title">Soluções Completas</h2>
-            </div>
-            
-            <div class="solutions-grid">
-                <!-- 1 -->
-                <div class="solution-card">
-                    <img src="" alt="Automações" id="img-sol-1" class="solution-img" loading="lazy">
-                    <div class="solution-body">
-                        <h3 class="solution-title">Automações</h3>
-                        <p class="solution-desc">Eliminamos tarefas repetitivas e criamos fluxos que funcionam sozinhos, liberando sua equipe para o estratégico.</p>
-                        <a href="#contato" class="btn-text">Otimizar processos →</a>
-                    </div>
-                </div>
-                <!-- 2 -->
-                <div class="solution-card">
-                    <img src="" alt="Desenvolvimento" id="img-sol-2" class="solution-img" loading="lazy">
-                    <div class="solution-body">
-                        <h3 class="solution-title">Desenvolvimento</h3>
-                        <p class="solution-desc">Sistemas digitais sob medida que evoluem com o seu negócio e entregam valor real.</p>
-                        <a href="#contato" class="btn-text">Criar sistema →</a>
-                    </div>
-                </div>
-                <!-- 3 -->
-                <div class="solution-card">
-                    <img src="" alt="Dashboards" id="img-sol-3" class="solution-img" loading="lazy">
-                    <div class="solution-body">
-                        <h3 class="solution-title">Business Intelligence</h3>
-                        <p class="solution-desc">Dashboards em tempo real e alertas automáticos para decisões mais rápidas e assertivas.</p>
-                        <a href="#contato" class="btn-text">Ver dados →</a>
-                    </div>
-                </div>
-                <!-- 4 -->
-                <div class="solution-card">
-                    <img src="" alt="Consultoria" id="img-sol-4" class="solution-img" loading="lazy">
-                    <div class="solution-body">
-                        <h3 class="solution-title">Consultoria de Processos</h3>
-                        <p class="solution-desc">Mapeamento e otimização de fluxos ponta a ponta para uma execução padronizada.</p>
-                        <a href="#contato" class="btn-text">Organizar →</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section id="sobre" class="section">
-        <div class="container">
-            <div class="about-grid">
-                <div class="about-content">
-                    <span class="section-tag">SOBRE NÓS</span>
-                    <h2 style="margin-bottom: 24px; font-size: 32px;">Especialistas em eficiência operacional</h2>
-                    <p>A Ordinum é uma consultoria focada em transformar o caos em ordem. Organizamos operações dispersas em um ecossistema único, onde os dados fluem e as decisões acontecem no ritmo do negócio.</p>
-                    
-                    <div style="margin-top: 24px;">
-                        <h4 style="font-size: 18px; font-weight: 500; margin-bottom: 8px; color: var(--color-navy);">O que fazemos</h4>
-                        <p>Automatizamos tarefas, conectamos sistemas, removemos retrabalho e implementamos IA com propósito prático.</p>
-                    </div>
-                    
-                    <div style="margin-top: 24px;">
-                        <h4 style="font-size: 18px; font-weight: 500; margin-bottom: 8px; color: var(--color-navy);">Para quem</h4>
-                        <p>Empresas em crescimento que precisam integrar plataformas, aumentar produtividade e ganhar previsibilidade.</p>
-                    </div>
-                </div>
-                <div class="about-media">
-                    <img src="" id="img-about" alt="Sobre a Ordinum" class="about-img" loading="lazy">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- DIVIDER SLOGAN -->
-    <div class="divider-slogan">
-        <div class="container">
-            <h2 class="slogan-text">Seu futuro, em ordem</h2>
-            <div class="slogan-line"></div>
-        </div>
-    </div>
-
-    <!-- CLIENTS -->
-    <section id="meios" class="section bg-light">
-        <div class="container">
-            <div class="text-center" style="margin-bottom: 40px;">
-                <span class="section-tag">NOSSOS MEIOS</span>
-            </div>
-            <div class="clients-grid">
-                <img src="" id="client-1" class="client-logo" alt="Cliente Ordinum">
-                <img src="" id="client-2" class="client-logo" alt="Cliente Ordinum">
-                <img src="" id="client-3" class="client-logo" alt="Cliente Ordinum">
-                <img src="" id="client-4" class="client-logo" alt="Cliente Ordinum">
-                <img src="" id="client-5" class="client-logo" alt="Cliente Ordinum">
-            </div>
-        </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contato" class="section">
-        <div class="container">
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <span class="section-tag">FALE CONOSCO</span>
-                    <h2 style="margin-bottom: 24px; font-size: 36px;">Pronto para o próximo nível?</h2>
-                    <p style="margin-bottom: 40px; color: var(--color-gray-600);">Entre em contato para agendar um diagnóstico gratuito da sua operação.</p>
-                    
-                    <div class="contact-details">
-                        <div class="contact-info-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                            <span class="address-text"></span>
-                        </div>
-                        <div class="contact-info-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                            <span class="phone-text"></span>
-                        </div>
-                        <div class="contact-info-item">
-                            <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                            <a href="" class="email-link" style="text-decoration: underline;"></a>
-                        </div>
-                    </div>
-
-                    <div class="social-links">
-                        <a href="#" target="_blank" class="social-circle social-insta" aria-label="Instagram">
-                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                        </a>
-                        <a href="#" target="_blank" class="social-circle social-wa" aria-label="WhatsApp">
-                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                        </a>
-                        <a href="#" target="_blank" class="social-circle social-li" aria-label="LinkedIn">
-                            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="contact-form-wrapper">
-                    <form class="contact-form" id="contact-form" onsubmit="handleContactSubmit(event)">
-                        <div class="form-group">
-                            <label class="form-label">Nome</label>
-                            <input type="text" id="contact-name" class="form-input" placeholder="Seu nome completo" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Celular</label>
-                            <!-- FIX: phone mask inputs (added numeric mode, autocomplete, maxlength) -->
-                            <input type="tel" id="contact-phone" class="form-input" placeholder="(00) 00000-0000" inputmode="numeric" autocomplete="tel" maxlength="15" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Email Corporativo</label>
-                            <input type="email" id="contact-email" class="form-input" placeholder="voce@empresa.com.br" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Como podemos ajudar?</label>
-                            <textarea id="contact-message" class="form-input" placeholder="Descreva brevemente sua necessidade..." required></textarea>
-                        </div>
-                        <button type="submit" id="contact-submit" class="btn btn-primary" style="width: 100%;">Enviar Mensagem</button>
-                        <p id="contact-feedback" aria-live="polite" style="margin-top: 12px; font-size: 14px; text-align: center; min-height: 20px;"></p>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- MAP -->
-    <div class="map-wrapper">
-        <iframe id="google-map-embed" class="map-frame" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Localização Ordinum"></iframe>
-        <div id="map-fallback" class="map-fallback hidden">
-            <h3 style="margin-bottom: 16px;">Uberlândia, MG</h3>
-            <a href="" id="map-fallback-link" target="_blank" class="btn btn-outline" style="color: var(--color-navy); border-color: var(--color-navy);">Ver no Google Maps</a>
-        </div>
-    </div>
-</main>
-
-<!-- FOOTER -->
-<footer class="footer">
-    <div class="container">
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <h3 id="footer-brand-name">ORDINUM</h3>
-                <p id="footer-tagline">Transformando operações manuais em sistemas inteligentes.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Mapa do Site</h4>
-                <a href="#hero" class="footer-link">Início</a>
-                <a href="#solucoes" class="footer-link">Soluções</a>
-                <a href="#sobre" class="footer-link">Sobre Nós</a>
-                <a href="#contato" class="footer-link">Contato</a>
-            </div>
-            <div class="footer-col">
-                <h4>Legal</h4>
-                <a href="#" class="footer-link">Política de Privacidade</a>
-                <a href="#" class="footer-link">Termos de Uso</a>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; <span id="year"></span> Ordinum. Todos os direitos reservados.</p>
-        </div>
-    </div>
-</footer>
-
-<!-- LOGIC -->
-<script defer>
-    // FIX: phone mask helper function
-    const formatBRPhone = (value) => {
-        // Remove non-digits
-        value = value.replace(/\D/g, '');
-        // Limit to 11 digits
-        value = value.substring(0, 11);
-        
-        // Apply mask progressively
-        if (value.length > 7) {
-            // (DD) XXXXX-XXXX
-            value = value.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, '($1) $2-$3');
-        } else if (value.length > 2) {
-            // (DD) XXXXX...
-            value = value.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
-        } else if (value.length > 0) {
-            // (DD...
-            value = value.replace(/^(\d*)/, '($1');
-        }
-        return value;
-    };
-
-    document.addEventListener('DOMContentLoaded', () => {
-        
-        // 1. POPULATE CONTENT FROM CONFIG
-        const el = (id) => document.getElementById(id);
-        const q = (sel) => document.querySelector(sel);
-
-        // Branding
-        el('brand-logo').textContent = SITE_CONFIG.brandName;
-        el('footer-brand-name').textContent = SITE_CONFIG.brandName;
-        el('hero-title').textContent = SITE_CONFIG.copy?.heroTitle || "Ordem dos Processos"; // Fallback to hardcoded if not in copy
-        el('hero-tagline').textContent = SITE_CONFIG.tagline;
-        el('footer-tagline').textContent = SITE_CONFIG.tagline;
-
-        // Backgrounds & Images
-        el('hero').style.backgroundImage = `url('${SITE_CONFIG.assets.heroBg}')`;
-        el('img-sol-1').src = SITE_CONFIG.assets.solution1;
-        el('img-sol-2').src = SITE_CONFIG.assets.solution2;
-        el('img-sol-3').src = SITE_CONFIG.assets.solution3;
-        el('img-sol-4').src = SITE_CONFIG.assets.solution4;
-        el('img-about').src = SITE_CONFIG.assets.aboutBg;
-        
-        // Clients Loop
-        const clientIds = ['client-1', 'client-2', 'client-3', 'client-4', 'client-5'];
-        const clientSrcs = [
-            SITE_CONFIG.assets.client1, SITE_CONFIG.assets.client2, 
-            SITE_CONFIG.assets.client3, SITE_CONFIG.assets.client4, 
-            SITE_CONFIG.assets.client5
-        ];
-        clientIds.forEach((id, index) => {
-            if(el(id) && clientSrcs[index]) el(id).src = clientSrcs[index];
-        });
-
-        // Contact Info
-        q('.address-text').textContent = SITE_CONFIG.contactAddress;
-        q('.phone-text').textContent = SITE_CONFIG.contactPhone;
-        const emailLink = q('.email-link');
-        emailLink.textContent = SITE_CONFIG.contactEmail;
-        emailLink.href = `mailto:${SITE_CONFIG.contactEmail}`;
-
-        // Socials
-        q('.social-insta').href = SITE_CONFIG.social.instagram;
-        q('.social-wa').href = SITE_CONFIG.whatsappLink;
-        q('.social-li').href = SITE_CONFIG.social.linkedin;
-
-        // Date
-        el('year').textContent = new Date().getFullYear();
-
-        // 2. MAP LOGIC
-        const mapFrame = el('google-map-embed');
-        const mapFallback = el('map-fallback');
-        const mapLink = el('map-fallback-link');
-
-        mapLink.href = SITE_CONFIG.mapFallback.link;
-        mapFrame.src = SITE_CONFIG.mapEmbedSrc;
-
-        // Simple timeout fallback if map takes too long or fails (simulated)
-        mapFrame.onerror = () => {
-            mapFrame.classList.add('hidden');
-            mapFallback.classList.remove('hidden');
-        };
-
-        // 3. UI INTERACTIONS
-
-        // FIX: phone mask listener
-        const phoneInput = el('contact-phone');
-        if (phoneInput) {
-            phoneInput.addEventListener('input', (e) => {
-                e.target.value = formatBRPhone(e.target.value);
-            });
-            phoneInput.addEventListener('paste', (e) => {
-                const pasted = (e.clipboardData || window.clipboardData).getData('text');
-                e.preventDefault(); // Prevent default paste to handle manually
-                const currentVal = formatBRPhone(pasted);
-                e.target.value = currentVal;
-            });
-        }
-        
-        // Header Scroll Effect
-        const header = el('header');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
+            /* RESET & BASE */
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
             }
-        });
 
-        // Mobile Menu Toggle
-        const toggleBtn = el('menu-toggle');
-        const navMenu = el('nav-menu');
-        
-        toggleBtn.addEventListener('click', () => {
-            header.classList.toggle('menu-open');
-            const isExpanded = header.classList.contains('menu-open');
-            toggleBtn.setAttribute('aria-expanded', isExpanded);
-        });
+            html {
+                scroll-behavior: smooth;
+                font-size: 16px;
+            }
 
-        // Close mobile menu when link clicked
-        document.querySelectorAll('.nav-link, .header-cta').forEach(link => {
-            link.addEventListener('click', () => {
-                header.classList.remove('menu-open');
-            });
-        });
+            body {
+                font-family: var(--font-main);
+                color: var(--color-gray-600);
+                line-height: var(--line-height-body);
+                background-color: var(--color-white);
+                overflow-x: hidden;
+                -webkit-font-smoothing: antialiased;
+            }
 
-        // Active Link Highlighting
-        const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('.nav-link');
+            a {
+                text-decoration: none;
+                color: inherit;
+                transition: var(--transition-base);
+            }
+            ul {
+                list-style: none;
+            }
+            img {
+                max-width: 100%;
+                display: block;
+                height: auto;
+            }
+            button {
+                font-family: inherit;
+                border: none;
+                background: none;
+                cursor: pointer;
+            }
 
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (pageYOffset >= (sectionTop - 150)) {
-                    current = section.getAttribute('id');
+            /* TYPOGRAPHY */
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                color: var(--color-navy);
+                font-weight: 300; /* Light by default for premium feel */
+                line-height: 1.2;
+            }
+
+            .text-strong {
+                font-weight: 600;
+            }
+            .text-center {
+                text-align: center;
+            }
+
+            .section-tag {
+                display: block;
+                font-size: 12px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                color: var(--color-navy);
+                margin-bottom: 16px;
+            }
+
+            /* UTILITIES */
+            .container {
+                width: 100%;
+                max-width: var(--container-width);
+                margin: 0 auto;
+                padding: 0 var(--container-padding);
+            }
+
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 12px 28px;
+                font-weight: 500;
+                font-size: 15px;
+                border-radius: var(--border-radius-btn);
+                transition: all var(--transition-base);
+            }
+
+            .btn-primary {
+                background-color: var(--color-navy);
+                color: var(--color-white);
+            }
+            .btn-primary:hover {
+                background-color: var(--color-navy-light);
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(12, 32, 74, 0.2);
+            }
+            .btn-primary:disabled {
+                background-color: var(--color-gray-400);
+                transform: none;
+                box-shadow: none;
+                cursor: not-allowed;
+            }
+
+            .btn-outline {
+                border: 1px solid var(--color-white);
+                color: var(--color-white);
+            }
+            .btn-outline:hover {
+                background-color: var(--color-white);
+                color: var(--color-navy);
+            }
+
+            .btn-text {
+                color: var(--color-navy);
+                padding: 0;
+                font-weight: 600;
+                border-bottom: 1px solid transparent;
+            }
+            .btn-text:hover {
+                border-color: var(--color-navy);
+            }
+
+            /* FIX: skip-link (Hidden completely with transform, shows only on focus) */
+            .skip-link {
+                position: absolute;
+                top: 0;
+                left: 0;
+                background: var(--color-navy);
+                color: white;
+                padding: 8px;
+                z-index: 2000;
+                transform: translateY(-200%);
+            }
+            .skip-link:focus {
+                transform: translateY(0);
+            }
+
+            /* HEADER */
+            .header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: var(--header-height);
+                z-index: 1000;
+                background-color: transparent;
+                transition:
+                    background-color 0.3s ease,
+                    box-shadow 0.3s ease;
+            }
+
+            .header.scrolled {
+                background-color: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(10px);
+                box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            }
+
+            .header .container {
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .brand-logo {
+                font-size: 24px;
+                font-weight: 600;
+                letter-spacing: 1px;
+                color: var(--color-white); /* Initial state on dark hero */
+                z-index: 1002;
+            }
+
+            .header.scrolled .brand-logo,
+            .header.menu-open .brand-logo {
+                color: var(--color-navy);
+            }
+
+            .nav-desktop {
+                display: flex;
+                gap: 32px;
+                align-items: center;
+            }
+
+            .nav-link {
+                color: var(--color-white);
+                font-size: 15px;
+                font-weight: 400;
+                position: relative;
+            }
+
+            .header.scrolled .nav-link {
+                color: var(--color-navy);
+            }
+
+            .nav-link::after {
+                content: "";
+                position: absolute;
+                bottom: -4px;
+                left: 50%;
+                width: 0;
+                height: 1px;
+                background-color: currentColor;
+                transition:
+                    width 0.3s ease,
+                    left 0.3s ease;
+            }
+            .nav-link:hover::after,
+            .nav-link.active::after {
+                width: 100%;
+                left: 0;
+            }
+
+            .header-cta {
+                background-color: var(--color-white);
+                color: var(--color-navy);
+                padding: 10px 24px;
+            }
+            .header.scrolled .header-cta {
+                background-color: var(--color-navy);
+                color: var(--color-white);
+            }
+
+            /* Mobile Menu Toggle */
+            .mobile-toggle {
+                display: none;
+                flex-direction: column;
+                gap: 6px;
+                z-index: 1002;
+            }
+            .bar {
+                width: 24px;
+                height: 2px;
+                background-color: var(--color-white);
+                transition: all 0.3s ease;
+            }
+            .header.scrolled .bar {
+                background-color: var(--color-navy);
+            }
+            .header.menu-open .bar {
+                background-color: var(--color-navy);
+            }
+
+            /* Mobile Menu State */
+            .header.menu-open .bar:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 6px);
+            }
+            .header.menu-open .bar:nth-child(2) {
+                opacity: 0;
+            }
+            .header.menu-open .bar:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -6px);
+            }
+
+            /* HERO SECTION */
+            .hero {
+                position: relative;
+                height: 90vh;
+                min-height: 600px;
+                display: flex;
+                align-items: center;
+                background-size: cover;
+                background-position: center;
+                color: var(--color-white);
+            }
+
+            .hero-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(135deg, rgba(12, 32, 74, 0.85) 0%, rgba(12, 32, 74, 0.5) 100%);
+                z-index: 1;
+            }
+
+            .hero-content {
+                position: relative;
+                z-index: 2;
+                max-width: 800px;
+                padding-top: 60px;
+                opacity: 0;
+                transform: translateY(20px);
+                animation: fadeUp 1s ease forwards 0.3s;
+            }
+
+            .hero-tagline {
+                display: block;
+                font-size: 12px;
+                letter-spacing: 3px;
+                text-transform: uppercase;
+                margin-bottom: 24px;
+                opacity: 0.8;
+                font-weight: 500;
+            }
+
+            .hero-title {
+                font-size: 56px;
+                margin-bottom: 24px;
+                font-weight: 300;
+                color: white;
+            }
+
+            .hero-desc {
+                font-size: 18px;
+                line-height: 1.6;
+                margin-bottom: 40px;
+                max-width: 600px;
+                opacity: 0.9;
+                color: white;
+            }
+
+            .hero-actions {
+                display: flex;
+                gap: 16px;
+            }
+
+            /* SECTION COMMON */
+            .section {
+                padding: 80px 0;
+            }
+            .bg-light {
+                background-color: var(--color-gray-50);
+            }
+
+            /* VALUES (ICONS) */
+            .values-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 48px;
+            }
+
+            .value-item {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .value-icon {
+                width: 64px;
+                height: 64px;
+                margin-bottom: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .value-icon svg {
+                width: 48px;
+                height: 48px;
+                stroke: var(--color-navy);
+                fill: none;
+                stroke-width: 1.5;
+            }
+
+            .value-title {
+                font-size: 20px;
+                font-weight: 500;
+                margin-bottom: 12px;
+            }
+            .value-text {
+                font-size: 16px;
+                color: var(--color-gray-600);
+            }
+
+            /* SOLUTIONS */
+            .section-header {
+                text-align: center;
+                margin-bottom: 60px;
+            }
+            .section-title {
+                font-size: 40px;
+                margin-bottom: 16px;
+            }
+
+            .solutions-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 32px;
+            }
+
+            .solution-card {
+                background: var(--color-white);
+                border-radius: var(--border-radius-card);
+                border: 1px solid var(--color-gray-200);
+                overflow: hidden;
+                transition: all 0.3s ease;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .solution-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 12px 24px rgba(12, 32, 74, 0.08);
+                border-color: var(--color-navy-light);
+            }
+
+            .solution-img {
+                width: 100%;
+                aspect-ratio: 16/9;
+                object-fit: cover;
+                background-color: var(--color-gray-200);
+            }
+
+            .solution-body {
+                padding: 32px;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+            }
+            .solution-title {
+                font-size: 22px;
+                font-weight: 500;
+                margin-bottom: 12px;
+            }
+            .solution-desc {
+                margin-bottom: 24px;
+                flex-grow: 1;
+                font-size: 15px;
+            }
+
+            /* ABOUT */
+            .about-grid {
+                display: grid;
+                grid-template-columns: 1.2fr 0.8fr;
+                gap: 64px;
+                align-items: center;
+            }
+
+            .about-content p {
+                margin-bottom: 20px;
+            }
+            .about-img {
+                border-radius: var(--border-radius-card);
+                box-shadow: 20px 20px 0 var(--color-gray-100);
+            }
+
+            /* SLOGAN DIVIDER */
+            .divider-slogan {
+                background-color: var(--color-navy);
+                padding: 80px 0;
+                text-align: center;
+                position: relative;
+            }
+            .slogan-text {
+                color: var(--color-white);
+                font-size: 32px;
+                font-weight: 300;
+                letter-spacing: 1px;
+            }
+            .slogan-line {
+                width: 60px;
+                height: 1px;
+                background-color: rgba(255, 255, 255, 0.3);
+                margin: 24px auto 0;
+            }
+
+            /* CLIENTS */
+            .clients-grid {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 48px;
+                align-items: center;
+            }
+            .client-logo {
+                height: 50px;
+                width: auto;
+                filter: grayscale(100%) opacity(0.5);
+                transition: all 0.3s ease;
+            }
+            .client-logo:hover {
+                filter: grayscale(0%) opacity(1);
+            }
+
+            /* CONTACT */
+            .contact-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 64px;
+            }
+
+            .contact-info-item {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                margin-bottom: 20px;
+                font-size: 16px;
+            }
+            .contact-icon {
+                width: 20px;
+                height: 20px;
+                stroke: var(--color-navy);
+            }
+
+            .social-links {
+                display: flex;
+                gap: 16px;
+                margin-top: 32px;
+            }
+            .social-circle {
+                width: 40px;
+                height: 40px;
+                border: 1px solid var(--color-navy);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: var(--color-navy);
+                transition: all 0.3s ease;
+            }
+            .social-circle:hover {
+                background-color: var(--color-navy);
+                color: var(--color-white);
+            }
+            .social-circle svg {
+                width: 18px;
+                height: 18px;
+                fill: currentColor;
+            }
+
+            .form-group {
+                margin-bottom: 24px;
+            }
+            .form-label {
+                display: block;
+                font-size: 13px;
+                font-weight: 600;
+                color: var(--color-navy);
+                margin-bottom: 8px;
+            }
+            .form-input {
+                width: 100%;
+                padding: 12px 0;
+                border: none;
+                border-bottom: 1px solid var(--color-gray-200);
+                font-family: inherit;
+                font-size: 16px;
+                background: transparent;
+                outline: none;
+                transition: border-color 0.3s ease;
+            }
+            .form-input:focus {
+                border-bottom: 2px solid var(--color-navy);
+            }
+            textarea.form-input {
+                resize: vertical;
+                min-height: 80px;
+            }
+
+            /* MAP */
+            .map-wrapper {
+                position: relative;
+                width: 100%;
+                height: 400px;
+                background-color: var(--color-gray-200);
+            }
+            .map-frame {
+                width: 100%;
+                height: 100%;
+                border: 0;
+            }
+
+            .map-fallback {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background-color: var(--color-gray-100);
+                z-index: 10;
+            }
+
+            /* FOOTER */
+            .footer {
+                background-color: var(--color-navy);
+                color: var(--color-white);
+                padding: 64px 0 32px;
+            }
+            .footer-grid {
+                display: grid;
+                grid-template-columns: 2fr 1fr 1fr;
+                gap: 40px;
+                margin-bottom: 60px;
+            }
+            .footer-brand h3 {
+                color: white;
+                margin-bottom: 16px;
+                font-weight: 500;
+            }
+            .footer-brand p {
+                opacity: 0.7;
+                max-width: 300px;
+                font-size: 14px;
+            }
+
+            .footer-col h4 {
+                color: white;
+                font-size: 16px;
+                font-weight: 600;
+                margin-bottom: 24px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+            .footer-link {
+                display: block;
+                opacity: 0.7;
+                margin-bottom: 12px;
+                font-size: 14px;
+            }
+            .footer-link:hover {
+                opacity: 1;
+                text-decoration: underline;
+            }
+
+            .copyright {
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                padding-top: 32px;
+                text-align: center;
+                font-size: 13px;
+                opacity: 0.5;
+            }
+
+            /* RESPONSIVE */
+            @media (max-width: 992px) {
+                :root {
+                    --container-padding: 20px;
                 }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').includes(current)) {
-                    link.classList.add('active');
+                .hero-title {
+                    font-size: 42px;
                 }
-            });
-        });
-    });
+                .values-grid {
+                    gap: 32px;
+                }
+                .about-grid {
+                    grid-template-columns: 1fr;
+                    gap: 40px;
+                }
+                .footer-grid {
+                    grid-template-columns: 1fr 1fr;
+                }
+            }
 
-    /* 
+            @media (max-width: 768px) {
+                .mobile-toggle {
+                    display: flex;
+                }
+                .nav-desktop {
+                    position: fixed;
+                    top: 0;
+                    right: 0;
+                    height: 100vh;
+                    width: 280px;
+                    background-color: var(--color-navy);
+                    flex-direction: column;
+                    align-items: flex-start;
+                    justify-content: center;
+                    padding: 40px;
+                    transform: translateX(100%);
+                    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+                }
+                .header.menu-open .nav-desktop {
+                    transform: translateX(0);
+                }
+
+                .nav-link {
+                    font-size: 20px;
+                    color: white !important;
+                }
+                .header-cta {
+                    width: 100%;
+                    text-align: center;
+                    margin-top: 20px;
+                }
+
+                .hero {
+                    height: auto;
+                    padding: 120px 0 80px;
+                    text-align: left;
+                }
+                .hero-title {
+                    font-size: 36px;
+                }
+
+                .values-grid {
+                    grid-template-columns: 1fr;
+                    gap: 40px;
+                }
+                .solutions-grid {
+                    grid-template-columns: 1fr;
+                }
+                .contact-grid {
+                    grid-template-columns: 1fr;
+                    gap: 48px;
+                }
+                .footer-grid {
+                    grid-template-columns: 1fr;
+                    text-align: center;
+                }
+                .footer-brand p,
+                .footer-brand {
+                    margin: 0 auto;
+                }
+            }
+
+            /* ANIMATION UTILS */
+            @keyframes fadeUp {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .hidden {
+                display: none !important;
+            }
+        </style>
+    </head>
+    <body>
+        <a href="#main" class="skip-link">Pular para conteúdo</a>
+
+        <!-- HEADER -->
+        <header class="header" id="header">
+            <div class="container">
+                <a href="#" class="brand-logo" id="brand-logo">ORDINUM</a>
+
+                <button class="mobile-toggle" aria-label="Abrir Menu" id="menu-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+
+                <nav class="nav-desktop" id="nav-menu">
+                    <a href="#hero" class="nav-link">Início</a>
+                    <a href="#solucoes" class="nav-link">Soluções</a>
+                    <a href="#sobre" class="nav-link">Sobre</a>
+                    <a href="#meios" class="nav-link">Meios</a>
+                    <a href="#contato" class="btn btn-primary header-cta">Contato</a>
+                </nav>
+            </div>
+        </header>
+
+        <main id="main">
+            <!-- HERO -->
+            <section id="hero" class="hero">
+                <div class="hero-overlay"></div>
+                <div class="container hero-content">
+                    <span class="hero-tagline" id="hero-tagline">SEU FUTURO EM ORDEM</span>
+                    <h1 class="hero-title" id="hero-title">Ordem dos Processos</h1>
+                    <p class="hero-desc" id="hero-subtitle">
+                        Transformamos operações manuais e descentralizadas em sistemas inteligentes e autônomos. Mais
+                        ordem, menos esforço.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#contato" class="btn btn-primary">Começar Agora</a>
+                        <a href="#solucoes" class="btn btn-outline">Conheça</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VALUES -->
+            <section id="valores" class="section">
+                <div class="container">
+                    <div class="values-grid">
+                        <!-- Ordem -->
+                        <div class="value-item">
+                            <div class="value-icon">
+                                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                                </svg>
+                            </div>
+                            <h3 class="value-title">Ordem</h3>
+                            <p class="value-text">
+                                Estruturar fluxos internos para uma execução fluida, organizada e sem gargalos
+                                operacionais.
+                            </p>
+                        </div>
+                        <!-- Eficiência -->
+                        <div class="value-item">
+                            <div class="value-icon">
+                                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                                </svg>
+                            </div>
+                            <h3 class="value-title">Eficiência</h3>
+                            <p class="value-text">
+                                Reduzir esforços manuais e eliminar redundâncias com a implementação de processos
+                                inteligentes.
+                            </p>
+                        </div>
+                        <!-- Clareza -->
+                        <div class="value-item">
+                            <div class="value-icon">
+                                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                </svg>
+                            </div>
+                            <h3 class="value-title">Clareza</h3>
+                            <p class="value-text">
+                                Trazer transparência total às operações, permitindo decisões baseadas em dados reais.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SOLUTIONS -->
+            <section id="solucoes" class="section bg-light">
+                <div class="container">
+                    <div class="section-header">
+                        <span class="section-tag">SERVIÇOS</span>
+                        <h2 class="section-title">Soluções Completas</h2>
+                    </div>
+
+                    <div class="solutions-grid">
+                        <!-- 1 -->
+                        <div class="solution-card">
+                            <img src="" alt="Automações" id="img-sol-1" class="solution-img" loading="lazy" />
+                            <div class="solution-body">
+                                <h3 class="solution-title">Automações</h3>
+                                <p class="solution-desc">
+                                    Eliminamos tarefas repetitivas e criamos fluxos que funcionam sozinhos, liberando
+                                    sua equipe para o estratégico.
+                                </p>
+                                <a href="#contato" class="btn-text">Otimizar processos →</a>
+                            </div>
+                        </div>
+                        <!-- 2 -->
+                        <div class="solution-card">
+                            <img src="" alt="Desenvolvimento" id="img-sol-2" class="solution-img" loading="lazy" />
+                            <div class="solution-body">
+                                <h3 class="solution-title">Desenvolvimento</h3>
+                                <p class="solution-desc">
+                                    Sistemas digitais sob medida que evoluem com o seu negócio e entregam valor real.
+                                </p>
+                                <a href="#contato" class="btn-text">Criar sistema →</a>
+                            </div>
+                        </div>
+                        <!-- 3 -->
+                        <div class="solution-card">
+                            <img src="" alt="Dashboards" id="img-sol-3" class="solution-img" loading="lazy" />
+                            <div class="solution-body">
+                                <h3 class="solution-title">Business Intelligence</h3>
+                                <p class="solution-desc">
+                                    Dashboards em tempo real e alertas automáticos para decisões mais rápidas e
+                                    assertivas.
+                                </p>
+                                <a href="#contato" class="btn-text">Ver dados →</a>
+                            </div>
+                        </div>
+                        <!-- 4 -->
+                        <div class="solution-card">
+                            <img src="" alt="Consultoria" id="img-sol-4" class="solution-img" loading="lazy" />
+                            <div class="solution-body">
+                                <h3 class="solution-title">Consultoria de Processos</h3>
+                                <p class="solution-desc">
+                                    Mapeamento e otimização de fluxos ponta a ponta para uma execução padronizada.
+                                </p>
+                                <a href="#contato" class="btn-text">Organizar →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ABOUT -->
+            <section id="sobre" class="section">
+                <div class="container">
+                    <div class="about-grid">
+                        <div class="about-content">
+                            <span class="section-tag">SOBRE NÓS</span>
+                            <h2 style="margin-bottom: 24px; font-size: 32px">
+                                Especialistas em eficiência operacional
+                            </h2>
+                            <p>
+                                A Ordinum é uma consultoria focada em transformar o caos em ordem. Organizamos operações
+                                dispersas em um ecossistema único, onde os dados fluem e as decisões acontecem no ritmo
+                                do negócio.
+                            </p>
+
+                            <div style="margin-top: 24px">
+                                <h4
+                                    style="
+                                        font-size: 18px;
+                                        font-weight: 500;
+                                        margin-bottom: 8px;
+                                        color: var(--color-navy);
+                                    "
+                                >
+                                    O que fazemos
+                                </h4>
+                                <p>
+                                    Automatizamos tarefas, conectamos sistemas, removemos retrabalho e implementamos IA
+                                    com propósito prático.
+                                </p>
+                            </div>
+
+                            <div style="margin-top: 24px">
+                                <h4
+                                    style="
+                                        font-size: 18px;
+                                        font-weight: 500;
+                                        margin-bottom: 8px;
+                                        color: var(--color-navy);
+                                    "
+                                >
+                                    Para quem
+                                </h4>
+                                <p>
+                                    Empresas em crescimento que precisam integrar plataformas, aumentar produtividade e
+                                    ganhar previsibilidade.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="about-media">
+                            <img src="" id="img-about" alt="Sobre a Ordinum" class="about-img" loading="lazy" />
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DIVIDER SLOGAN -->
+            <div class="divider-slogan">
+                <div class="container">
+                    <h2 class="slogan-text">Seu futuro, em ordem</h2>
+                    <div class="slogan-line"></div>
+                </div>
+            </div>
+
+            <!-- CLIENTS -->
+            <section id="meios" class="section bg-light">
+                <div class="container">
+                    <div class="text-center" style="margin-bottom: 40px">
+                        <span class="section-tag">NOSSOS MEIOS</span>
+                    </div>
+                    <div class="clients-grid">
+                        <img src="" id="client-1" class="client-logo" alt="Cliente Ordinum" />
+                        <img src="" id="client-2" class="client-logo" alt="Cliente Ordinum" />
+                        <img src="" id="client-3" class="client-logo" alt="Cliente Ordinum" />
+                        <img src="" id="client-4" class="client-logo" alt="Cliente Ordinum" />
+                        <img src="" id="client-5" class="client-logo" alt="Cliente Ordinum" />
+                    </div>
+                </div>
+            </section>
+
+            <!-- CONTACT -->
+            <section id="contato" class="section">
+                <div class="container">
+                    <div class="contact-grid">
+                        <div class="contact-info">
+                            <span class="section-tag">FALE CONOSCO</span>
+                            <h2 style="margin-bottom: 24px; font-size: 36px">Pronto para o próximo nível?</h2>
+                            <p style="margin-bottom: 40px; color: var(--color-gray-600)">
+                                Entre em contato para agendar um diagnóstico gratuito da sua operação.
+                            </p>
+
+                            <div class="contact-details">
+                                <div class="contact-info-item">
+                                    <svg
+                                        class="contact-icon"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                        <circle cx="12" cy="10" r="3"></circle>
+                                    </svg>
+                                    <span class="address-text"></span>
+                                </div>
+                                <div class="contact-info-item">
+                                    <svg
+                                        class="contact-icon"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path
+                                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                                        ></path>
+                                    </svg>
+                                    <span class="phone-text"></span>
+                                </div>
+                                <div class="contact-info-item">
+                                    <svg
+                                        class="contact-icon"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path
+                                            d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                                        ></path>
+                                        <polyline points="22,6 12,13 2,6"></polyline>
+                                    </svg>
+                                    <a href="" class="email-link" style="text-decoration: underline"></a>
+                                </div>
+                            </div>
+
+                            <div class="social-links">
+                                <a href="#" target="_blank" class="social-circle social-insta" aria-label="Instagram">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        fill="none"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                    </svg>
+                                </a>
+                                <a href="#" target="_blank" class="social-circle social-wa" aria-label="WhatsApp">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        fill="none"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path
+                                            d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"
+                                        ></path>
+                                    </svg>
+                                </a>
+                                <a href="#" target="_blank" class="social-circle social-li" aria-label="LinkedIn">
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        fill="none"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                    >
+                                        <path
+                                            d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+                                        ></path>
+                                        <rect x="2" y="9" width="4" height="12"></rect>
+                                        <circle cx="4" cy="4" r="2"></circle>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="contact-form-wrapper">
+                            <form class="contact-form" id="contact-form" onsubmit="handleContactSubmit(event)">
+                                <div class="form-group">
+                                    <label class="form-label">Nome</label>
+                                    <input
+                                        type="text"
+                                        id="contact-name"
+                                        class="form-input"
+                                        placeholder="Seu nome completo"
+                                        required
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Celular</label>
+                                    <!-- FIX: phone mask inputs (added numeric mode, autocomplete, maxlength) -->
+                                    <input
+                                        type="tel"
+                                        id="contact-phone"
+                                        class="form-input"
+                                        placeholder="(00) 00000-0000"
+                                        inputmode="numeric"
+                                        autocomplete="tel"
+                                        maxlength="15"
+                                        required
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Email Corporativo</label>
+                                    <input
+                                        type="email"
+                                        id="contact-email"
+                                        class="form-input"
+                                        placeholder="voce@empresa.com.br"
+                                        required
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Como podemos ajudar?</label>
+                                    <textarea
+                                        id="contact-message"
+                                        class="form-input"
+                                        placeholder="Descreva brevemente sua necessidade..."
+                                        required
+                                    ></textarea>
+                                </div>
+                                <button type="submit" id="contact-submit" class="btn btn-primary" style="width: 100%">
+                                    Enviar Mensagem
+                                </button>
+                                <p
+                                    id="contact-feedback"
+                                    aria-live="polite"
+                                    style="margin-top: 12px; font-size: 14px; text-align: center; min-height: 20px"
+                                ></p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- MAP -->
+            <div class="map-wrapper">
+                <iframe
+                    id="google-map-embed"
+                    class="map-frame"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="Localização Ordinum"
+                ></iframe>
+                <div id="map-fallback" class="map-fallback hidden">
+                    <h3 style="margin-bottom: 16px">Uberlândia, MG</h3>
+                    <a
+                        href=""
+                        id="map-fallback-link"
+                        target="_blank"
+                        class="btn btn-outline"
+                        style="color: var(--color-navy); border-color: var(--color-navy)"
+                        >Ver no Google Maps</a
+                    >
+                </div>
+            </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-brand">
+                        <h3 id="footer-brand-name">ORDINUM</h3>
+                        <p id="footer-tagline">Transformando operações manuais em sistemas inteligentes.</p>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Mapa do Site</h4>
+                        <a href="#hero" class="footer-link">Início</a>
+                        <a href="#solucoes" class="footer-link">Soluções</a>
+                        <a href="#sobre" class="footer-link">Sobre Nós</a>
+                        <a href="#contato" class="footer-link">Contato</a>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Legal</h4>
+                        <a href="https://www.ordinum.com.br/privacy-policy" class="footer-link">
+                            Política de Privacidade
+                        </a>
+
+                        <a href="https://www.ordinum.com.br/terms-of-use" class="footer-link"> Termos de Uso </a>
+                    </div>
+                </div>
+                <div class="copyright">
+                    <p>&copy; <span id="year"></span> Ordinum. Todos os direitos reservados.</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- LOGIC -->
+        <script defer>
+            // FIX: phone mask helper function
+            const formatBRPhone = (value) => {
+                // Remove non-digits
+                value = value.replace(/\D/g, "");
+                // Limit to 11 digits
+                value = value.substring(0, 11);
+
+                // Apply mask progressively
+                if (value.length > 7) {
+                    // (DD) XXXXX-XXXX
+                    value = value.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, "($1) $2-$3");
+                } else if (value.length > 2) {
+                    // (DD) XXXXX...
+                    value = value.replace(/^(\d{2})(\d{0,5})/, "($1) $2");
+                } else if (value.length > 0) {
+                    // (DD...
+                    value = value.replace(/^(\d*)/, "($1");
+                }
+                return value;
+            };
+
+            document.addEventListener("DOMContentLoaded", () => {
+                // 1. POPULATE CONTENT FROM CONFIG
+                const el = (id) => document.getElementById(id);
+                const q = (sel) => document.querySelector(sel);
+
+                // Branding
+                el("brand-logo").textContent = SITE_CONFIG.brandName;
+                el("footer-brand-name").textContent = SITE_CONFIG.brandName;
+                el("hero-title").textContent = SITE_CONFIG.copy?.heroTitle || "Ordem dos Processos"; // Fallback to hardcoded if not in copy
+                el("hero-tagline").textContent = SITE_CONFIG.tagline;
+                el("footer-tagline").textContent = SITE_CONFIG.tagline;
+
+                // Backgrounds & Images
+                el("hero").style.backgroundImage = `url('${SITE_CONFIG.assets.heroBg}')`;
+                el("img-sol-1").src = SITE_CONFIG.assets.solution1;
+                el("img-sol-2").src = SITE_CONFIG.assets.solution2;
+                el("img-sol-3").src = SITE_CONFIG.assets.solution3;
+                el("img-sol-4").src = SITE_CONFIG.assets.solution4;
+                el("img-about").src = SITE_CONFIG.assets.aboutBg;
+
+                // Clients Loop
+                const clientIds = ["client-1", "client-2", "client-3", "client-4", "client-5"];
+                const clientSrcs = [
+                    SITE_CONFIG.assets.client1,
+                    SITE_CONFIG.assets.client2,
+                    SITE_CONFIG.assets.client3,
+                    SITE_CONFIG.assets.client4,
+                    SITE_CONFIG.assets.client5,
+                ];
+                clientIds.forEach((id, index) => {
+                    if (el(id) && clientSrcs[index]) el(id).src = clientSrcs[index];
+                });
+
+                // Contact Info
+                q(".address-text").textContent = SITE_CONFIG.contactAddress;
+                q(".phone-text").textContent = SITE_CONFIG.contactPhone;
+                const emailLink = q(".email-link");
+                emailLink.textContent = SITE_CONFIG.contactEmail;
+                emailLink.href = `mailto:${SITE_CONFIG.contactEmail}`;
+
+                // Socials
+                q(".social-insta").href = SITE_CONFIG.social.instagram;
+                q(".social-wa").href = SITE_CONFIG.whatsappLink;
+                q(".social-li").href = SITE_CONFIG.social.linkedin;
+
+                // Date
+                el("year").textContent = new Date().getFullYear();
+
+                // 2. MAP LOGIC
+                const mapFrame = el("google-map-embed");
+                const mapFallback = el("map-fallback");
+                const mapLink = el("map-fallback-link");
+
+                mapLink.href = SITE_CONFIG.mapFallback.link;
+                mapFrame.src = SITE_CONFIG.mapEmbedSrc;
+
+                // Simple timeout fallback if map takes too long or fails (simulated)
+                mapFrame.onerror = () => {
+                    mapFrame.classList.add("hidden");
+                    mapFallback.classList.remove("hidden");
+                };
+
+                // 3. UI INTERACTIONS
+
+                // FIX: phone mask listener
+                const phoneInput = el("contact-phone");
+                if (phoneInput) {
+                    phoneInput.addEventListener("input", (e) => {
+                        e.target.value = formatBRPhone(e.target.value);
+                    });
+                    phoneInput.addEventListener("paste", (e) => {
+                        const pasted = (e.clipboardData || window.clipboardData).getData("text");
+                        e.preventDefault(); // Prevent default paste to handle manually
+                        const currentVal = formatBRPhone(pasted);
+                        e.target.value = currentVal;
+                    });
+                }
+
+                // Header Scroll Effect
+                const header = el("header");
+                window.addEventListener("scroll", () => {
+                    if (window.scrollY > 50) {
+                        header.classList.add("scrolled");
+                    } else {
+                        header.classList.remove("scrolled");
+                    }
+                });
+
+                // Mobile Menu Toggle
+                const toggleBtn = el("menu-toggle");
+                const navMenu = el("nav-menu");
+
+                toggleBtn.addEventListener("click", () => {
+                    header.classList.toggle("menu-open");
+                    const isExpanded = header.classList.contains("menu-open");
+                    toggleBtn.setAttribute("aria-expanded", isExpanded);
+                });
+
+                // Close mobile menu when link clicked
+                document.querySelectorAll(".nav-link, .header-cta").forEach((link) => {
+                    link.addEventListener("click", () => {
+                        header.classList.remove("menu-open");
+                    });
+                });
+
+                // Active Link Highlighting
+                const sections = document.querySelectorAll("section");
+                const navLinks = document.querySelectorAll(".nav-link");
+
+                window.addEventListener("scroll", () => {
+                    let current = "";
+                    sections.forEach((section) => {
+                        const sectionTop = section.offsetTop;
+                        const sectionHeight = section.clientHeight;
+                        if (pageYOffset >= sectionTop - 150) {
+                            current = section.getAttribute("id");
+                        }
+                    });
+
+                    navLinks.forEach((link) => {
+                        link.classList.remove("active");
+                        if (link.getAttribute("href").includes(current)) {
+                            link.classList.add("active");
+                        }
+                    });
+                });
+            });
+
+            /* 
        CORS Note: The webhook endpoint must return the following headers:
        Access-Control-Allow-Origin: *
        Access-Control-Allow-Methods: POST, OPTIONS
        Access-Control-Allow-Headers: Content-Type
     */
 
-    function validateEmail(email) {
-        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return re.test(email);
-    }
-
-    function normalizePhone(phone) {
-        return phone.replace(/\D/g, '');
-    }
-
-    function handleContactSubmit(event) {
-        event.preventDefault();
-
-        const form = document.getElementById('contact-form');
-        const btn = document.getElementById('contact-submit');
-        const feedback = document.getElementById('contact-feedback');
-
-        const nameInput = document.getElementById('contact-name');
-        const phoneInput = document.getElementById('contact-phone');
-        const emailInput = document.getElementById('contact-email');
-        const msgInput = document.getElementById('contact-message');
-
-        const name = nameInput.value.trim();
-        const phone = phoneInput.value.trim();
-        const email = emailInput.value.trim();
-        const message = msgInput.value.trim();
-
-        // Validation
-        if (name.length < 2) {
-            feedback.textContent = "Nome deve ter pelo menos 2 caracteres.";
-            feedback.style.color = "red";
-            return;
-        }
-        if (!validateEmail(email)) {
-            feedback.textContent = "Por favor, insira um email válido.";
-            feedback.style.color = "red";
-            return;
-        }
-        
-        // FIX: phone validation (must be 11 digits)
-        const normalizedPhone = normalizePhone(phone);
-        if (!normalizedPhone || normalizedPhone.length !== 11) {
-            feedback.textContent = "O celular deve ter 11 dígitos (DDD + 9 números).";
-            feedback.style.color = "red";
-            return;
-        }
-
-        if (!message) {
-            feedback.textContent = "A descrição é obrigatória.";
-            feedback.style.color = "red";
-            return;
-        }
-        
-        // Prepare Payload
-        const payload = {
-            source: "ordinum-site",
-            type: "contact_form",
-            timestamp: new Date().toISOString(),
-            page_url: window.location.href,
-            name: name,
-            phone: normalizedPhone,
-            email: email,
-            message: message,
-            user_agent: navigator.userAgent
-        };
-
-        // Loading State
-        btn.disabled = true;
-        const originalBtnText = btn.textContent;
-        btn.textContent = "Enviando...";
-        feedback.textContent = "";
-
-        const webhookUrl = SITE_CONFIG.webhooks && SITE_CONFIG.webhooks.contactForm 
-                           ? SITE_CONFIG.webhooks.contactForm 
-                           : "";
-
-        if (!webhookUrl) {
-            console.error("Webhook not configured");
-            feedback.textContent = "Erro de configuração.";
-            feedback.style.color = "red";
-            btn.disabled = false;
-            btn.textContent = originalBtnText;
-            return;
-        }
-
-        fetch(webhookUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        })
-        .then(response => {
-            if (response.ok) {
-                feedback.textContent = "Obrigado, recebemos sua mensagem.";
-                feedback.style.color = "green";
-                form.reset();
-            } else {
-                throw new Error('Network error');
+            function validateEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
             }
-        })
-        .catch(error => {
-            console.error('Submission error:', error);
-            feedback.textContent = "Não foi possível enviar agora, tente novamente.";
-            feedback.style.color = "red";
-        })
-        .finally(() => {
-            // Restore button state
-            btn.disabled = false;
-            btn.textContent = "Enviar Mensagem";
-        });
-    }
-</script>
-</body>
+
+            function normalizePhone(phone) {
+                return phone.replace(/\D/g, "");
+            }
+
+            function handleContactSubmit(event) {
+                event.preventDefault();
+
+                const form = document.getElementById("contact-form");
+                const btn = document.getElementById("contact-submit");
+                const feedback = document.getElementById("contact-feedback");
+
+                const nameInput = document.getElementById("contact-name");
+                const phoneInput = document.getElementById("contact-phone");
+                const emailInput = document.getElementById("contact-email");
+                const msgInput = document.getElementById("contact-message");
+
+                const name = nameInput.value.trim();
+                const phone = phoneInput.value.trim();
+                const email = emailInput.value.trim();
+                const message = msgInput.value.trim();
+
+                // Validation
+                if (name.length < 2) {
+                    feedback.textContent = "Nome deve ter pelo menos 2 caracteres.";
+                    feedback.style.color = "red";
+                    return;
+                }
+                if (!validateEmail(email)) {
+                    feedback.textContent = "Por favor, insira um email válido.";
+                    feedback.style.color = "red";
+                    return;
+                }
+
+                // FIX: phone validation (must be 11 digits)
+                const normalizedPhone = normalizePhone(phone);
+                if (!normalizedPhone || normalizedPhone.length !== 11) {
+                    feedback.textContent = "O celular deve ter 11 dígitos (DDD + 9 números).";
+                    feedback.style.color = "red";
+                    return;
+                }
+
+                if (!message) {
+                    feedback.textContent = "A descrição é obrigatória.";
+                    feedback.style.color = "red";
+                    return;
+                }
+
+                // Prepare Payload
+                const payload = {
+                    source: "ordinum-site",
+                    type: "contact_form",
+                    timestamp: new Date().toISOString(),
+                    page_url: window.location.href,
+                    name: name,
+                    phone: normalizedPhone,
+                    email: email,
+                    message: message,
+                    user_agent: navigator.userAgent,
+                };
+
+                // Loading State
+                btn.disabled = true;
+                const originalBtnText = btn.textContent;
+                btn.textContent = "Enviando...";
+                feedback.textContent = "";
+
+                const webhookUrl =
+                    SITE_CONFIG.webhooks && SITE_CONFIG.webhooks.contactForm ? SITE_CONFIG.webhooks.contactForm : "";
+
+                if (!webhookUrl) {
+                    console.error("Webhook not configured");
+                    feedback.textContent = "Erro de configuração.";
+                    feedback.style.color = "red";
+                    btn.disabled = false;
+                    btn.textContent = originalBtnText;
+                    return;
+                }
+
+                fetch(webhookUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(payload),
+                })
+                    .then((response) => {
+                        if (response.ok) {
+                            feedback.textContent = "Obrigado, recebemos sua mensagem.";
+                            feedback.style.color = "green";
+                            form.reset();
+                        } else {
+                            throw new Error("Network error");
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Submission error:", error);
+                        feedback.textContent = "Não foi possível enviar agora, tente novamente.";
+                        feedback.style.color = "red";
+                    })
+                    .finally(() => {
+                        // Restore button state
+                        btn.disabled = false;
+                        btn.textContent = "Enviar Mensagem";
+                    });
+            }
+        </script>
+    </body>
 </html>
