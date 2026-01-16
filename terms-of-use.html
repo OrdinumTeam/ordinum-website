@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Termos de Uso | Ordinum</title>
+<meta name="description" content="Termos de Uso da Ordinum. As regras e diretrizes que regem o uso do nosso site e serviços de consultoria.">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Google Fonts: Montserrat -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- CONFIGURATION -->
+<script>
+    const SITE_CONFIG = {
+        webhooks: {
+            contactForm: "https://operation.ordinum.com.br/webhook/lobby/?workflow=skdahBstQI4F8yO5"
+        },
+        brandName: "ORDINUM",
+        tagline: "Seu futuro, em ordem",
+        contactEmail: "contato@ordinum.com.br",
+        contactPhone: "(34) 3199-8308",
+        contactAddress: "Uberlândia, MG",
+        whatsappLink: "https://api.whatsapp.com/send/?phone=553431998308&text=Ol%C3%A1%21+Gostaria+de+ordenar+meus+processos%21&type=phone_number&app_absent=0",
+        social: {
+            instagram: "https://www.instagram.com/ordinum.br/",
+            linkedin: "https://www.linkedin.com/company/ordinum"
+        },
+        assets: {
+            favicon: "https://ordinum-default-bucket.s3.us-east-1.amazonaws.com/img/favicon-ordinum.png",
+            heroBg: "https://static.wixstatic.com/media/b25960_5a7fabaa7cc646dcb11535996327f51b~mv2.jpg",
+            aboutBg: "https://static.wixstatic.com/media/b25960_5375bfd1f4b544758e2faad1c15fa91b~mv2.png"
+        }
+    };
+
+    // Set Favicon
+    const link = document.createElement('link');
+    link.rel = 'icon';
+    link.href = SITE_CONFIG.assets.favicon;
+    document.head.appendChild(link);
+</script>
+
+<!-- STYLES -->
+<style>
+    /* VARIABLES */
+    :root {
+        --color-navy: #0C204A;
+        --color-navy-light: #1A3A6E;
+        --color-graphite: #2D2D2D;
+        --color-gray-600: #4A4A4A;
+        --color-gray-400: #8A8A8A;
+        --color-gray-200: #E5E5E5;
+        --color-gray-100: #F5F5F5;
+        --color-gray-50: #FAFAFA;
+        --color-white: #FFFFFF;
+        
+        --font-main: 'Montserrat', sans-serif;
+        --font-size-body: 16px;
+        --line-height-body: 1.6;
+
+        --container-width: 1200px;
+        --container-padding: 24px;
+        --header-height: 80px;
+        --border-radius-card: 8px;
+        --border-radius-btn: 6px;
+        
+        --transition-base: 0.2s ease;
+    }
+
+    /* RESET & BASE */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+        font-family: var(--font-main);
+        color: var(--color-gray-600);
+        line-height: var(--line-height-body);
+        background-color: var(--color-white);
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; color: inherit; transition: var(--transition-base); }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; height: auto; }
+    button { font-family: inherit; border: none; background: none; cursor: pointer; }
+
+    /* TYPOGRAPHY */
+    h1, h2, h3, h4, h5, h6 {
+        color: var(--color-navy);
+        font-weight: 400;
+        line-height: 1.3;
+        margin-bottom: 16px;
+    }
+    h2 { font-size: 28px; margin-top: 40px; }
+    h3 { font-size: 20px; font-weight: 600; margin-top: 24px; }
+    p { margin-bottom: 16px; }
+    
+    .text-strong { font-weight: 600; }
+    .text-center { text-align: center; }
+
+    /* UTILITIES */
+    .container {
+        width: 100%;
+        max-width: var(--container-width);
+        margin: 0 auto;
+        padding: 0 var(--container-padding);
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 28px;
+        font-weight: 500;
+        font-size: 15px;
+        border-radius: var(--border-radius-btn);
+        transition: all var(--transition-base);
+    }
+    .btn-primary { background-color: var(--color-navy); color: var(--color-white); }
+    .btn-primary:hover { background-color: var(--color-navy-light); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(12, 32, 74, 0.2); }
+    .btn-outline { border: 1px solid var(--color-white); color: var(--color-white); }
+    .btn-outline:hover { background-color: var(--color-white); color: var(--color-navy); }
+
+    .skip-link {
+        position: absolute; top: 0; left: 0; background: var(--color-navy); color: white; padding: 8px; z-index: 2000;
+        transform: translateY(-200%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    /* HEADER */
+    .header {
+        position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); z-index: 1000;
+        background-color: transparent; transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .header.scrolled {
+        background-color: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    }
+    .header .container { height: 100%; display: flex; align-items: center; justify-content: space-between; }
+    
+    .brand-logo { font-size: 24px; font-weight: 600; letter-spacing: 1px; color: var(--color-white); z-index: 1002; }
+    .header.scrolled .brand-logo, .header.menu-open .brand-logo { color: var(--color-navy); }
+
+    .nav-desktop { display: flex; gap: 32px; align-items: center; }
+    .nav-link { color: var(--color-white); font-size: 15px; position: relative; }
+    .header.scrolled .nav-link { color: var(--color-navy); }
+    .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 50%; width: 0; height: 1px; background-color: currentColor; transition: width 0.3s ease, left 0.3s ease; }
+    .nav-link:hover::after { width: 100%; left: 0; }
+
+    .header-cta { background-color: var(--color-white); color: var(--color-navy); padding: 10px 24px; }
+    .header.scrolled .header-cta { background-color: var(--color-navy); color: var(--color-white); }
+
+    /* Mobile Toggle */
+    .mobile-toggle { display: none; flex-direction: column; gap: 6px; z-index: 1002; }
+    .bar { width: 24px; height: 2px; background-color: var(--color-white); transition: all 0.3s ease; }
+    .header.scrolled .bar, .header.menu-open .bar { background-color: var(--color-navy); }
+    .header.menu-open .bar:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+    .header.menu-open .bar:nth-child(2) { opacity: 0; }
+    .header.menu-open .bar:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+
+    /* HERO SPECIFIC */
+    .hero {
+        position: relative; height: 60vh; min-height: 400px; display: flex; align-items: center;
+        background-size: cover; background-position: center; color: var(--color-white);
+    }
+    .hero-overlay {
+        position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(135deg, rgba(12, 32, 74, 0.9) 0%, rgba(12, 32, 74, 0.7) 100%); z-index: 1;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 800px; padding-top: 60px; animation: fadeUp 1s ease forwards 0.3s; opacity: 0; transform: translateY(20px); }
+    .hero-title { font-size: 48px; margin-bottom: 16px; font-weight: 300; color: white; }
+    .hero-subtitle { font-size: 20px; opacity: 0.9; margin-bottom: 32px; font-weight: 300; letter-spacing: 1px; }
+
+    /* CONTENT STYLES (Reused from Privacy) */
+    .bg-light { background-color: var(--color-gray-50); padding: 60px 0; }
+    
+    .terms-card {
+        background: var(--color-white);
+        border-radius: var(--border-radius-card);
+        border: 1px solid var(--color-gray-200);
+        padding: 60px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        max-width: 1000px;
+        margin: -100px auto 0; /* Overlap effect */
+        position: relative;
+        z-index: 10;
+    }
+
+    .last-updated {
+        display: inline-block;
+        background-color: var(--color-gray-100);
+        color: var(--color-gray-600);
+        font-size: 12px;
+        padding: 6px 12px;
+        border-radius: 20px;
+        margin-bottom: 40px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .terms-content ul { list-style: disc; padding-left: 24px; margin-bottom: 24px; }
+    .terms-content li { margin-bottom: 8px; }
+
+    /* SUMMARY CARDS */
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 24px;
+        margin-bottom: 60px;
+        border-bottom: 1px solid var(--color-gray-200);
+        padding-bottom: 40px;
+    }
+    .summary-item { padding: 20px; background-color: var(--color-gray-50); border-radius: 8px; }
+    .summary-icon { width: 32px; height: 32px; stroke: var(--color-navy); margin-bottom: 12px; }
+    .summary-title { font-size: 14px; font-weight: 700; color: var(--color-navy); text-transform: uppercase; margin-bottom: 8px; }
+    .summary-text { font-size: 14px; line-height: 1.4; color: var(--color-gray-600); }
+
+    /* FAQ ACCORDION */
+    .faq-container { margin-top: 60px; border-top: 1px solid var(--color-gray-200); padding-top: 40px; }
+    details { margin-bottom: 16px; border: 1px solid var(--color-gray-200); border-radius: 8px; overflow: hidden; transition: all 0.3s ease; }
+    details[open] { border-color: var(--color-navy); background-color: var(--color-gray-50); }
+    summary {
+        padding: 16px 24px; cursor: pointer; font-weight: 500; color: var(--color-navy);
+        display: flex; justify-content: space-between; align-items: center; list-style: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: '+'; font-size: 20px; font-weight: 300; }
+    details[open] summary::after { content: '-'; }
+    .faq-answer { padding: 0 24px 24px; color: var(--color-gray-600); font-size: 15px; }
+
+    /* BACK TO TOP */
+    .back-to-top {
+        position: fixed; bottom: 30px; right: 30px;
+        width: 48px; height: 48px;
+        background-color: var(--color-navy); color: white;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer; opacity: 0; pointer-events: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        z-index: 999;
+    }
+    .back-to-top.visible { opacity: 1; pointer-events: auto; }
+
+    /* FOOTER */
+    .footer { background-color: var(--color-navy); color: var(--color-white); padding: 64px 0 32px; margin-top: 0; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 60px; }
+    .footer-brand h3 { color: white; margin-bottom: 16px; font-weight: 500; }
+    .footer-brand p { opacity: 0.7; max-width: 300px; font-size: 14px; }
+    .footer-col h4 { color: white; font-size: 16px; font-weight: 600; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 1px; }
+    .footer-link { display: block; opacity: 0.7; margin-bottom: 12px; font-size: 14px; }
+    .footer-link:hover { opacity: 1; text-decoration: underline; }
+    .footer-link.active { opacity: 1; font-weight: 600; text-decoration: none; cursor: default; }
+    .copyright { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 32px; text-align: center; font-size: 13px; opacity: 0.5; }
+
+    /* RESPONSIVE */
+    @media (max-width: 992px) {
+        .terms-card { padding: 40px 24px; margin-top: -60px; }
+        .hero-title { font-size: 36px; }
+        .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+        .mobile-toggle { display: flex; }
+        .nav-desktop {
+            position: fixed; top: 0; right: 0; height: 100vh; width: 280px;
+            background-color: var(--color-navy); flex-direction: column; align-items: flex-start; justify-content: center;
+            padding: 40px; transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+        }
+        .header.menu-open .nav-desktop { transform: translateX(0); }
+        .nav-link { font-size: 20px; color: white !important; }
+        .hero { height: auto; padding: 120px 0 100px; }
+        .summary-grid { grid-template-columns: 1fr; }
+        .footer-grid { grid-template-columns: 1fr; text-align: center; }
+        .footer-brand p, .footer-brand { margin: 0 auto; }
+    }
+
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Pular para conteúdo</a>
+
+<!-- HEADER -->
+<header class="header" id="header">
+    <div class="container">
+        <a href="index.html" class="brand-logo" id="brand-logo">ORDINUM</a>
+        
+        <button class="mobile-toggle" aria-label="Abrir Menu" id="menu-toggle">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <nav class="nav-desktop" id="nav-menu">
+            <a href="index.html#hero" class="nav-link">Início</a>
+            <a href="index.html#solucoes" class="nav-link">Soluções</a>
+            <a href="index.html#sobre" class="nav-link">Sobre</a>
+            <a href="index.html#meios" class="nav-link">Meios</a>
+            <a href="index.html#contato" class="btn btn-primary header-cta">Contato</a>
+        </nav>
+    </div>
+</header>
+
+<main id="main">
+    <!-- HERO -->
+    <section id="hero" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h1 class="hero-title">Termos de Uso</h1>
+            <p class="hero-subtitle">Regras claras para uma parceria eficiente e segura.</p>
+            <div class="hero-actions">
+                <a href="" id="hero-contact-link" class="btn btn-primary">Falar com a Ordinum</a>
+                <a href="index.html" class="btn btn-outline">Voltar ao site</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <section class="section bg-light">
+        <div class="container">
+            <div class="terms-card">
+                <!-- Data de Atualização -->
+                <span id="last-updated" class="last-updated">Atualizado em: </span>
+
+                <!-- Resumo Visual -->
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <svg class="summary-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        <div class="summary-title">Aceitação</div>
+                        <p class="summary-text">Ao utilizar nosso site e serviços, você concorda automaticamente com estes termos.</p>
+                    </div>
+                    <div class="summary-item">
+                        <svg class="summary-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        <div class="summary-title">Propriedade</div>
+                        <p class="summary-text">A Ordinum detém os direitos intelectuais sobre suas metodologias e site.</p>
+                    </div>
+                    <div class="summary-item">
+                        <svg class="summary-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                        <div class="summary-title">Responsabilidade</div>
+                        <p class="summary-text">A automação depende de APIs de terceiros e não garantimos estabilidade externa.</p>
+                    </div>
+                    <div class="summary-item">
+                        <svg class="summary-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                        <div class="summary-title">Serviços</div>
+                        <p class="summary-text">Consultoria e desenvolvimento focados em ordem e eficiência operacional.</p>
+                    </div>
+                </div>
+
+                <!-- Conteúdo Legal -->
+                <div class="terms-content">
+                    <h2>1. Introdução e Aceitação</h2>
+                    <p>Estes Termos de Uso regem o acesso e a utilização do site da <strong>Ordinum</strong> e dos serviços de consultoria em automação e processos por nós oferecidos. Ao navegar em nossas plataformas ou contratar nossos serviços, o usuário ("Você") manifesta sua concordância integral com as condições aqui estabelecidas.</p>
+                    <p>Caso não concorde com qualquer parte destes termos, recomendamos a descontinuação imediata do uso do site e dos serviços.</p>
+
+                    <h2>2. Uso do Site e dos Serviços</h2>
+                    <p>A Ordinum compromete-se a prestar serviços com zelo e técnica, visando a organização e automação de processos. O Usuário concorda em:</p>
+                    <ul>
+                        <li>Fornecer informações verdadeiras, exatas e atualizadas quando solicitadas em formulários de contato ou durante reuniões de diagnóstico.</li>
+                        <li>Não utilizar nossos serviços ou site para fins ilegais, fraudulentos ou que violem direitos de terceiros.</li>
+                        <li>Não tentar invadir, testar vulnerabilidades ou realizar engenharia reversa em nossos sistemas e códigos proprietários.</li>
+                    </ul>
+
+                    <h2>3. Propriedade Intelectual</h2>
+                    <p>Todo o conteúdo deste site, incluindo textos, logotipos, design, identidade visual, bem como as metodologias de consultoria desenvolvidas pela Ordinum, são de nossa propriedade exclusiva e estão protegidos pela legislação de direitos autorais e propriedade industrial.</p>
+                    <p>A contratação de serviços de desenvolvimento e automação não implica na transferência da propriedade intelectual dos métodos da Ordinum, exceto quando explicitamente acordado em contrato específico de prestação de serviços.</p>
+
+                    <h2>4. Limitação de Responsabilidade</h2>
+                    <p>Nossos serviços de automação frequentemente dependem de integrações com plataformas de terceiros (ex: CRMs, Gateways de Pagamento, APIs de Redes Sociais). A Ordinum:</p>
+                    <ul>
+                        <li>Não se responsabiliza por falhas, instabilidades, mudanças de preço ou descontinuação de serviços de terceiros que afetem as automações criadas.</li>
+                        <li>Não garante resultados financeiros específicos, visto que a eficiência operacional depende também da execução correta por parte da equipe do cliente.</li>
+                        <li>Não se responsabiliza por eventuais perdas de dados decorrentes de mau uso das ferramentas pelo cliente ou falhas nos servidores das plataformas integradas.</li>
+                    </ul>
+
+                    <h2>5. Links para Sites de Terceiros</h2>
+                    <p>Nosso site pode conter links para sites externos que não são operados por nós. Aconselhamos fortemente que você reveja a Política de Privacidade e os Termos de Uso de cada site que visitar. Não temos controle sobre e não assumimos responsabilidade pelo conteúdo, políticas de privacidade ou práticas de sites ou serviços de terceiros.</p>
+
+                    <h2>6. Alterações nos Termos</h2>
+                    <p>Podemos atualizar nossos Termos de Uso periodicamente para refletir mudanças em nossos serviços ou na legislação aplicável. Recomendamos que você revise esta página regularmente para se manter informado sobre seus direitos e obrigações.</p>
+
+                    <h2>7. Legislação e Foro</h2>
+                    <p>Estes Termos serão regidos e interpretados de acordo com as leis da República Federativa do Brasil. Para dirimir quaisquer controvérsias oriundas destes Termos, as partes elegem o foro da comarca de <strong><span class="contact-city-placeholder"></span></strong>, renunciando a qualquer outro, por mais privilegiado que seja.</p>
+
+                    <h2>8. Contato</h2>
+                    <p>Se você tiver alguma dúvida sobre estes Termos de Uso, entre em contato conosco:</p>
+                    <p>
+                        <strong>Email:</strong> <span class="contact-email-placeholder text-strong"></span><br>
+                        <strong>Telefone:</strong> <span class="contact-phone-placeholder"></span>
+                    </p>
+                </div>
+
+                <!-- FAQ Accordion -->
+                <div class="faq-container">
+                    <h3 style="margin-bottom: 24px;">Dúvidas Comuns</h3>
+                    
+                    <details>
+                        <summary>O código das automações é meu?</summary>
+                        <div class="faq-answer">
+                            A propriedade do código e dos fluxos desenvolvidos depende do modelo de contrato assinado (projeto pontual ou recorrência). Em geral, garantimos ao cliente o direito de uso perpétuo das soluções entregues.
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>O que acontece se uma API parar de funcionar?</summary>
+                        <div class="faq-answer">
+                            Nós prestamos suporte para corrigir ou adaptar automações afetadas por mudanças em terceiros, mediante contrato de manutenção ativo ou nova proposta de serviço pontual.
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>Posso cancelar um serviço contratado?</summary>
+                        <div class="faq-answer">
+                            Sim. As condições de cancelamento, prazos de aviso prévio e eventuais multas rescisórias são detalhadas na Proposta Comercial e no Contrato de Prestação de Serviços específico de cada projeto.
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- BACK TO TOP -->
+<button id="back-to-top" class="back-to-top" aria-label="Voltar ao topo">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3 id="footer-brand-name">ORDINUM</h3>
+                <p id="footer-tagline">Transformando operações manuais em sistemas inteligentes.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Mapa do Site</h4>
+                <a href="index.html#hero" class="footer-link">Início</a>
+                <a href="index.html#solucoes" class="footer-link">Soluções</a>
+                <a href="index.html#sobre" class="footer-link">Sobre Nós</a>
+                <a href="index.html#contato" class="footer-link">Contato</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="privacy.html" class="footer-link">Política de Privacidade</a>
+                <a href="#" class="footer-link active">Termos de Uso</a>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; <span id="year"></span> Ordinum. Todos os direitos reservados.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- LOGIC -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. POPULATE DATA
+        const el = (id) => document.getElementById(id);
+        const q = (sel) => document.querySelector(sel);
+        const qa = (sel) => document.querySelectorAll(sel);
+
+        // Branding
+        el('brand-logo').textContent = SITE_CONFIG.brandName;
+        el('footer-brand-name').textContent = SITE_CONFIG.brandName;
+        el('footer-tagline').textContent = SITE_CONFIG.tagline;
+
+        // Background
+        el('hero').style.backgroundImage = `url('${SITE_CONFIG.assets.heroBg}')`;
+
+        // Contact Injection
+        el('hero-contact-link').href = `mailto:${SITE_CONFIG.contactEmail}`;
+        
+        qa('.contact-email-placeholder').forEach(span => {
+            span.textContent = SITE_CONFIG.contactEmail;
+        });
+        qa('.contact-phone-placeholder').forEach(span => {
+            span.textContent = SITE_CONFIG.contactPhone;
+        });
+        
+        // Extract city from address for the "Foro" clause
+        qa('.contact-city-placeholder').forEach(span => {
+            span.textContent = SITE_CONFIG.contactAddress; // Ex: Uberlândia, MG
+        });
+
+        // Dates
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const today = new Date().toLocaleDateString('pt-BR', options);
+        el('last-updated').textContent += today;
+        el('year').textContent = new Date().getFullYear();
+
+        // 2. HEADER SCROLL & MOBILE MENU
+        const header = el('header');
+        const toggleBtn = el('menu-toggle');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+            
+            // Back to top logic
+            const backBtn = el('back-to-top');
+            if (window.scrollY > 400) backBtn.classList.add('visible');
+            else backBtn.classList.remove('visible');
+        });
+
+        toggleBtn.addEventListener('click', () => {
+            header.classList.toggle('menu-open');
+            toggleBtn.setAttribute('aria-expanded', header.classList.contains('menu-open'));
+        });
+
+        el('back-to-top').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+</script>
+</body>
+</html>
