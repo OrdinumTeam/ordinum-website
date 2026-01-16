@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Política de Privacidade | Ordinum</title>
+<meta name="description" content="Política de Privacidade da Ordinum. Entenda como coletamos, usamos e protegemos seus dados com clareza e transparência.">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Google Fonts: Montserrat -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- CONFIGURATION (Mantida do original para consistência de dados) -->
+<script>
+    const SITE_CONFIG = {
+        webhooks: {
+            contactForm: "https://operation.ordinum.com.br/webhook/lobby/?workflow=skdahBstQI4F8yO5"
+        },
+        brandName: "ORDINUM",
+        tagline: "Seu futuro, em ordem",
+        contactEmail: "contato@ordinum.com.br",
+        contactPhone: "(34) 3199-8308",
+        contactAddress: "Uberlândia, MG",
+        whatsappLink: "https://api.whatsapp.com/send/?phone=553431998308&text=Ol%C3%A1%21+Gostaria+de+ordenar+meus+processos%21&type=phone_number&app_absent=0",
+        social: {
+            instagram: "https://www.instagram.com/ordinum.br/",
+            linkedin: "https://www.linkedin.com/company/ordinum"
+        },
+        assets: {
+            favicon: "https://ordinum-default-bucket.s3.us-east-1.amazonaws.com/img/favicon-ordinum.png",
+            heroBg: "https://static.wixstatic.com/media/b25960_5a7fabaa7cc646dcb11535996327f51b~mv2.jpg",
+            aboutBg: "https://static.wixstatic.com/media/b25960_5375bfd1f4b544758e2faad1c15fa91b~mv2.png"
+        }
+    };
+
+    // Set Favicon
+    const link = document.createElement('link');
+    link.rel = 'icon';
+    link.href = SITE_CONFIG.assets.favicon;
+    document.head.appendChild(link);
+</script>
+
+<!-- STYLES -->
+<style>
+    /* VARIABLES (Mantidas do original) */
+    :root {
+        --color-navy: #0C204A;
+        --color-navy-light: #1A3A6E;
+        --color-graphite: #2D2D2D;
+        --color-gray-600: #4A4A4A;
+        --color-gray-400: #8A8A8A;
+        --color-gray-200: #E5E5E5;
+        --color-gray-100: #F5F5F5;
+        --color-gray-50: #FAFAFA;
+        --color-white: #FFFFFF;
+        
+        --font-main: 'Montserrat', sans-serif;
+        --font-size-body: 16px;
+        --line-height-body: 1.6;
+
+        --container-width: 1200px;
+        --container-padding: 24px;
+        --header-height: 80px;
+        --border-radius-card: 8px;
+        --border-radius-btn: 6px;
+        
+        --transition-base: 0.2s ease;
+    }
+
+    /* RESET & BASE */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+        font-family: var(--font-main);
+        color: var(--color-gray-600);
+        line-height: var(--line-height-body);
+        background-color: var(--color-white);
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; color: inherit; transition: var(--transition-base); }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; height: auto; }
+    button { font-family: inherit; border: none; background: none; cursor: pointer; }
+
+    /* TYPOGRAPHY */
+    h1, h2, h3, h4, h5, h6 {
+        color: var(--color-navy);
+        font-weight: 400;
+        line-height: 1.3;
+        margin-bottom: 16px;
+    }
+    h2 { font-size: 28px; margin-top: 40px; }
+    h3 { font-size: 20px; font-weight: 600; margin-top: 24px; }
+    p { margin-bottom: 16px; }
+    
+    .text-strong { font-weight: 600; }
+    .text-center { text-align: center; }
+
+    /* UTILITIES */
+    .container {
+        width: 100%;
+        max-width: var(--container-width);
+        margin: 0 auto;
+        padding: 0 var(--container-padding);
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 28px;
+        font-weight: 500;
+        font-size: 15px;
+        border-radius: var(--border-radius-btn);
+        transition: all var(--transition-base);
+    }
+    .btn-primary { background-color: var(--color-navy); color: var(--color-white); }
+    .btn-primary:hover { background-color: var(--color-navy-light); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(12, 32, 74, 0.2); }
+    .btn-outline { border: 1px solid var(--color-white); color: var(--color-white); }
+    .btn-outline:hover { background-color: var(--color-white); color: var(--color-navy); }
+
+    .skip-link {
+        position: absolute; top: 0; left: 0; background: var(--color-navy); color: white; padding: 8px; z-index: 2000;
+        transform: translateY(-200%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    /* HEADER */
+    .header {
+        position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height); z-index: 1000;
+        background-color: transparent; transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .header.scrolled {
+        background-color: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+    }
+    .header .container { height: 100%; display: flex; align-items: center; justify-content: space-between; }
+    
+    .brand-logo { font-size: 24px; font-weight: 600; letter-spacing: 1px; color: var(--color-white); z-index: 1002; }
+    .header.scrolled .brand-logo, .header.menu-open .brand-logo { color: var(--color-navy); }
+
+    .nav-desktop { display: flex; gap: 32px; align-items: center; }
+    .nav-link { color: var(--color-white); font-size: 15px; position: relative; }
+    .header.scrolled .nav-link { color: var(--color-navy); }
+    .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 50%; width: 0; height: 1px; background-color: currentColor; transition: width 0.3s ease, left 0.3s ease; }
+    .nav-link:hover::after { width: 100%; left: 0; }
+
+    .header-cta { background-color: var(--color-white); color: var(--color-navy); padding: 10px 24px; }
+    .header.scrolled .header-cta { background-color: var(--color-navy); color: var(--color-white); }
+
+    /* Mobile Toggle */
+    .mobile-toggle { display: none; flex-direction: column; gap: 6px; z-index: 1002; }
+    .bar { width: 24px; height: 2px; background-color: var(--color-white); transition: all 0.3s ease; }
+    .header.scrolled .bar, .header.menu-open .bar { background-color: var(--color-navy); }
+    .header.menu-open .bar:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+    .header.menu-open .bar:nth-child(2) { opacity: 0; }
+    .header.menu-open .bar:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+
+    /* HERO SPECIFIC FOR PRIVACY */
+    .hero {
+        position: relative; height: 60vh; min-height: 400px; display: flex; align-items: center;
+        background-size: cover; background-position: center; color: var(--color-white);
+    }
+    .hero-overlay {
+        position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(135deg, rgba(12, 32, 74, 0.9) 0%, rgba(12, 32, 74, 0.7) 100%); z-index: 1;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 800px; padding-top: 60px; animation: fadeUp 1s ease forwards 0.3s; opacity: 0; transform: translateY(20px); }
+    .hero-title { font-size: 48px; margin-bottom: 16px; font-weight: 300; color: white; }
+    .hero-subtitle { font-size: 20px; opacity: 0.9; margin-bottom: 32px; font-weight: 300; letter-spacing: 1px; }
+
+    /* PRIVACY CONTENT STYLES */
+    .bg-light { background-color: var(--color-gray-50); padding: 60px 0; }
+    
+    .privacy-card {
+        background: var(--color-white);
+        border-radius: var(--border-radius-card);
+        border: 1px solid var(--color-gray-200);
+        padding: 60px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+        max-width: 1000px;
+        margin: -100px auto 0; /* Overlap effect */
+        position: relative;
+        z-index: 10;
+    }
+
+    .last-updated {
+        display: inline-block;
+        background-color: var(--color-gray-100);
+        color: var(--color-gray-600);
+        font-size: 12px;
+        padding: 6px 12px;
+        border-radius: 20px;
+        margin-bottom: 40px;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .privacy-content ul { list-style: disc; padding-left: 24px; margin-bottom: 24px; }
+    .privacy-content li { margin-bottom: 8px; }
+
+    /* SUMMARY CARDS */
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 24px;
+        margin-bottom: 60px;
+        border-bottom: 1px solid var(--color-gray-200);
+        padding-bottom: 40px;
+    }
+    .summary-item { padding: 20px; background-color: var(--color-gray-50); border-radius: 8px; }
+    .summary-icon { width: 32px; height: 32px; stroke: var(--color-navy); margin-bottom: 12px; }
+    .summary-title { font-size: 14px; font-weight: 700; color: var(--color-navy); text-transform: uppercase; margin-bottom: 8px; }
+    .summary-text { font-size: 14px; line-height: 1.4; color: var(--color-gray-600); }
+
+    /* FAQ ACCORDION */
+    .faq-container { margin-top: 60px; border-top: 1px solid var(--color-gray-200); padding-top: 40px; }
+    details { margin-bottom: 16px; border: 1px solid var(--color-gray-200); border-radius: 8px; overflow: hidden; transition: all 0.3s ease; }
+    details[open] { border-color: var(--color-navy); background-color: var(--color-gray-50); }
+    summary {
+        padding: 16px 24px; cursor: pointer; font-weight: 500; color: var(--color-navy);
+        display: flex; justify-content: space-between; align-items: center; list-style: none;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: '+'; font-size: 20px; font-weight: 300; }
+    details[open] summary::after { content: '-'; }
+    .faq-answer { padding: 0 24px 24px; color: var(--color-gray-600); font-size: 15px; }
+
+    /* BACK TO TOP */
+    .back-to-top {
+        position: fixed; bottom: 30px; right: 30px;
+        width: 48px; height: 48px;
+        background-color: var(--color-navy); color: white;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer; opacity: 0; pointer-events: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        z-index: 999;
+    }
+    .back-to-top.visible { opacity: 1; pointer-events: auto; }
+
+    /* FOOTER */
+    .footer { background-color: var(--color-navy); color: var(--color-white); padding: 64px 0 32px; margin-top: 0; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 60px; }
+    .footer-brand h3 { color: white; margin-bottom: 16px; font-weight: 500; }
+    .footer-brand p { opacity: 0.7; max-width: 300px; font-size: 14px; }
+    .footer-col h4 { color: white; font-size: 16px; font-weight: 600; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 1px; }
+    .footer-link { display: block; opacity: 0.7; margin-bottom: 12px; font-size: 14px; }
+    .footer-link:hover { opacity: 1; text-decoration: underline; }
+    .footer-link.active { opacity: 1; font-weight: 600; text-decoration: none; cursor: default; }
+    .copyright { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 32px; text-align: center; font-size: 13px; opacity: 0.5; }
+
+    /* RESPONSIVE */
+    @media (max-width: 992px) {
+        .privacy-card { padding: 40px 24px; margin-top: -60px; }
+        .hero-title { font-size: 36px; }
+        .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+        .mobile-toggle { display: flex; }
+        .nav-desktop {
+            position: fixed; top: 0; right: 0; height: 100vh; width: 280px;
+            background-color: var(--color-navy); flex-direction: column; align-items: flex-start; justify-content: center;
+            padding: 40px; transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+        }
+        .header.menu-open .nav-desktop { transform: translateX(0); }
+        .nav-link { font-size: 20px; color: white !important; }
+        .hero { height: auto; padding: 120px 0 100px; }
+        .summary-grid { grid-template-columns: 1fr; }
+        .footer-grid { grid-template-columns: 1fr; text-align: center; }
+        .footer-brand p, .footer-brand { margin: 0 auto; }
+    }
+
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Pular para conteúdo</a>
+
+<!-- HEADER -->
+<header class="header" id="header">
+    <div class="container">
+        <a href="index.html" class="brand-logo" id="brand-logo">ORDINUM</a>
+        
+        <button class="mobile-toggle" aria-label="Abrir Menu" id="menu-toggle">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <!-- Navegação ajustada para voltar à Home -->
+        <nav class="nav-desktop" id="nav-menu">
+            <a href="index.html#hero" class="nav-link">Início</a>
+            <a href="index.html#solucoes" class="nav-link">Soluções</a>
+            <a href="index.html#sobre" class="nav-link">Sobre</a>
+            <a href="index.html#meios" class="nav-link">Meios</a>
+            <a href="index.html#contato" class="btn btn-primary header-cta">Contato</a>
+        </nav>
+    </div>
+</header>
+
+<main id="main">
+    <!-- HERO -->
+    <section id="hero" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <h1 class="hero-title">Política de Privacidade</h1>
+            <p class="hero-subtitle">Clareza, ordem e transparência em cada dado.</p>
+            <div class="hero-actions">
+                <a href="" id="hero-contact-link" class="btn btn-primary">Falar com a Ordinum</a>
+                <a href="index.html" class="btn btn-outline">Voltar ao site</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT -->
+    <section class="section bg-light">
+        <div class="container">
+            <div class="privacy-card">
+                <!-- Data de Atualização -->
+                <span id="last-updated" class="last-updated">Atualizado em: </span>
+
+                <!-- Resumo Visual -->
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <svg class="summary-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                        <div class="summary-title">Dados Coletados</div>
+                        <p class="summary-text">Informações de contato e dados técnicos para execução dos serviços.</p>
+                    </div>
+                    <div class="summary-item">
+                        <svg class="summary-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                        <div class="summary-title">Segurança</div>
+                        <p class="summary-text">Protocolos rígidos e parceiros globais confiáveis para proteção.</p>
+                    </div>
+                    <div class="summary-item">
+                        <svg class="summary-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        <div class="summary-title">Finalidade</div>
+                        <p class="summary-text">Otimização de processos, comunicação e cumprimento legal.</p>
+                    </div>
+                    <div class="summary-item">
+                        <svg class="summary-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        <div class="summary-title">Contato</div>
+                        <p class="summary-text">Canal direto para exercer seus direitos como titular.</p>
+                    </div>
+                </div>
+
+                <!-- Conteúdo Legal -->
+                <div class="privacy-content">
+                    <h2>1. Quem somos e Objetivo</h2>
+                    <p>A <strong>Ordinum</strong> é uma consultoria especializada em transformar operações manuais em sistemas inteligentes. Esta Política de Privacidade descreve como tratamos os seus dados pessoais ao interagir com nossos serviços, site e ferramentas, em conformidade com a Lei Geral de Proteção de Dados (LGPD - Lei nº 13.709/2018).</p>
+                    <p>Prezamos pela ordem não apenas nos processos de nossos clientes, mas também na gestão das informações que nos são confiadas.</p>
+
+                    <h2>2. Dados que coletamos</h2>
+                    <p>Para prestar nossos serviços de consultoria e automação, podemos coletar os seguintes tipos de dados:</p>
+                    <ul>
+                        <li><strong>Dados fornecidos por você:</strong> Nome, e-mail corporativo, número de telefone e informações sobre o seu negócio inseridas em nossos formulários de contato ou durante reuniões de diagnóstico.</li>
+                        <li><strong>Dados de navegação:</strong> Endereço IP, tipo de navegador, páginas acessadas, tempo de permanência e outras informações coletadas via cookies para análise de desempenho do site.</li>
+                        <li><strong>Dados de processos:</strong> No contexto da prestação de serviços, podemos ter acesso a dados operacionais necessários para a estruturação de fluxos e automações.</li>
+                    </ul>
+
+                    <h2>3. Como usamos seus dados (Finalidade)</h2>
+                    <p>Utilizamos suas informações estritamente para:</p>
+                    <ul>
+                        <li>Entregar os serviços contratados (consultoria, desenvolvimento e automação).</li>
+                        <li>Responder a solicitações de contato e agendamento de diagnósticos.</li>
+                        <li>Enviar comunicações institucionais relevantes, caso você tenha optado por recebê-las.</li>
+                        <li>Cumprir obrigações legais, regulatórias ou contratuais.</li>
+                        <li>Melhorar a performance e segurança de nosso site e sistemas.</li>
+                    </ul>
+
+                    <h2>4. Bases Legais</h2>
+                    <p>O tratamento de seus dados é realizado com base nas seguintes hipóteses legais:</p>
+                    <ul>
+                        <li><strong>Consentimento:</strong> Quando você preenche nossos formulários voluntariamente.</li>
+                        <li><strong>Execução de Contrato:</strong> Para viabilizar a prestação dos serviços acordados.</li>
+                        <li><strong>Legítimo Interesse:</strong> Para análises estatísticas e melhoria de nossos serviços, sempre respeitando seus direitos fundamentais.</li>
+                    </ul>
+
+                    <h2>5. Compartilhamento e Transferência Internacional</h2>
+                    <p>A Ordinum preza pela confidencialidade. Não vendemos seus dados. O compartilhamento ocorre apenas com:</p>
+                    <ul>
+                        <li><strong>Provedores de Tecnologia:</strong> Ferramentas de nuvem, automação e hospedagem (ex: serviços de cloud computing e plataformas de workflow) essenciais para nossa operação.</li>
+                        <li><strong>Autoridades:</strong> Quando exigido por lei ou ordem judicial.</li>
+                    </ul>
+                    <p>Alguns desses fornecedores podem estar localizados fora do Brasil. Nesses casos, garantimos que a transferência internacional de dados ocorra para países com nível adequado de proteção ou mediante salvaguardas contratuais padrão.</p>
+
+                    <h2>6. Segurança e Retenção</h2>
+                    <p>Adotamos medidas técnicas e administrativas para proteger seus dados contra acessos não autorizados e situações acidentais. Seus dados são armazenados pelo tempo necessário para cumprir as finalidades descritas nesta política ou conforme exigido por lei.</p>
+
+                    <h2>7. Seus Direitos (LGPD)</h2>
+                    <p>Como titular dos dados, você tem o direito de solicitar a qualquer momento:</p>
+                    <ul>
+                        <li>Confirmação da existência de tratamento.</li>
+                        <li>Acesso aos dados.</li>
+                        <li>Correção de dados incompletos, inexatos ou desatualizados.</li>
+                        <li>Anonimização, bloqueio ou eliminação de dados desnecessários.</li>
+                        <li>Revogação do consentimento.</li>
+                    </ul>
+
+                    <h2>8. Cookies</h2>
+                    <p>Utilizamos cookies para melhorar sua experiência de navegação. Você pode gerenciar suas preferências de cookies diretamente nas configurações do seu navegador.</p>
+
+                    <h2>9. Fale Conosco</h2>
+                    <p>Para exercer seus direitos ou tirar dúvidas sobre esta política, entre em contato conosco através dos canais oficiais:</p>
+                    <p>
+                        <strong>Email:</strong> <span class="contact-email-placeholder text-strong"></span><br>
+                        <strong>Endereço:</strong> <span class="contact-address-placeholder"></span>
+                    </p>
+                </div>
+
+                <!-- FAQ Accordion -->
+                <div class="faq-container">
+                    <h3 style="margin-bottom: 24px;">Dúvidas Frequentes</h3>
+                    
+                    <details>
+                        <summary>Meus dados de negócio estão seguros?</summary>
+                        <div class="faq-answer">
+                            Sim. A confidencialidade é pilar da Ordinum. Dados operacionais compartilhados para fins de consultoria são tratados sob rigoroso sigilo e utilizados exclusivamente para a otimização dos seus processos.
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>Vocês enviam spam?</summary>
+                        <div class="faq-answer">
+                            Não. Acreditamos na comunicação essencial. Entramos em contato apenas para responder suas solicitações ou enviar conteúdos estritamente relevantes sobre eficiência operacional, caso autorizado.
+                        </div>
+                    </details>
+
+                    <details>
+                        <summary>Como solicito a exclusão dos meus dados?</summary>
+                        <div class="faq-answer">
+                            Basta enviar um e-mail para nosso canal de contato oficial informado nesta página solicitando a exclusão. Atenderemos sua solicitação dentro do prazo legal, ressalvadas as hipóteses de guarda obrigatória por lei.
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- BACK TO TOP -->
+<button id="back-to-top" class="back-to-top" aria-label="Voltar ao topo">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3 id="footer-brand-name">ORDINUM</h3>
+                <p id="footer-tagline">Transformando operações manuais em sistemas inteligentes.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Mapa do Site</h4>
+                <!-- Links apontam para a index -->
+                <a href="index.html#hero" class="footer-link">Início</a>
+                <a href="index.html#solucoes" class="footer-link">Soluções</a>
+                <a href="index.html#sobre" class="footer-link">Sobre Nós</a>
+                <a href="index.html#contato" class="footer-link">Contato</a>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="#" class="footer-link active">Política de Privacidade</a>
+                <a href="terms.html" class="footer-link">Termos de Uso</a>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; <span id="year"></span> Ordinum. Todos os direitos reservados.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- LOGIC -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. POPULATE DATA
+        const el = (id) => document.getElementById(id);
+        const q = (sel) => document.querySelector(sel);
+        const qa = (sel) => document.querySelectorAll(sel);
+
+        // Branding
+        el('brand-logo').textContent = SITE_CONFIG.brandName;
+        el('footer-brand-name').textContent = SITE_CONFIG.brandName;
+        el('footer-tagline').textContent = SITE_CONFIG.tagline;
+
+        // Background
+        el('hero').style.backgroundImage = `url('${SITE_CONFIG.assets.heroBg}')`;
+
+        // Contact Injection
+        el('hero-contact-link').href = `mailto:${SITE_CONFIG.contactEmail}`;
+        
+        qa('.contact-email-placeholder').forEach(span => {
+            span.textContent = SITE_CONFIG.contactEmail;
+        });
+        qa('.contact-address-placeholder').forEach(span => {
+            span.textContent = SITE_CONFIG.contactAddress;
+        });
+
+        // Dates
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const today = new Date().toLocaleDateString('pt-BR', options);
+        el('last-updated').textContent += today;
+        el('year').textContent = new Date().getFullYear();
+
+        // 2. HEADER SCROLL & MOBILE MENU
+        const header = el('header');
+        const toggleBtn = el('menu-toggle');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+            
+            // Back to top logic
+            const backBtn = el('back-to-top');
+            if (window.scrollY > 400) backBtn.classList.add('visible');
+            else backBtn.classList.remove('visible');
+        });
+
+        toggleBtn.addEventListener('click', () => {
+            header.classList.toggle('menu-open');
+            toggleBtn.setAttribute('aria-expanded', header.classList.contains('menu-open'));
+        });
+
+        el('back-to-top').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+</script>
+</body>
+</html>
